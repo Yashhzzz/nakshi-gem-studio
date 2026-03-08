@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import heroCardRing from '@/assets/hero-card-ring.jpg';
 import heroCardNecklace from '@/assets/hero-card-necklace.jpg';
