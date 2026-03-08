@@ -42,10 +42,10 @@ const HowItWorks = () => {
         </motion.h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
-          {/* Dashed connector — desktop only, positioned at mid-card height */}
+          {/* Dashed connector — desktop only, below the large numbers */}
           <div
             className="hidden md:block absolute left-[16%] right-[16%] border-t border-dashed border-border"
-            style={{ top: '30%', zIndex: 0 }}
+            style={{ top: '115px', zIndex: 0 }}
           />
 
           {steps.map((step, i) => (
