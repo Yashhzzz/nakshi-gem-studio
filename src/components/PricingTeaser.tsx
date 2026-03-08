@@ -32,7 +32,7 @@ const PricingTeaser = () => {
           A studio shoot costs ₹15,000–50,000. Nakshi AI costs ₹699 a month.
         </motion.p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
           {plans.map((plan, i) => (
             <PlanCard key={plan.name} plan={plan} index={i} onView={() => trackPlanView(plan.name, plan.price)} onCTA={() => trackPlanCTA(plan.name, plan.price)} />
           ))}
