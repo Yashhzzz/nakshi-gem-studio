@@ -20,16 +20,16 @@ const cardData = [
 
 const desktopPos = [
   { x: 0, y: 0, scale: 1, zIndex: 40, overlay: 0, shadow: '0 32px 80px rgba(41,28,14,0.22)' },
-  { x: 12, y: 14, scale: 0.96, zIndex: 30, overlay: 0.10, shadow: '0 24px 60px rgba(41,28,14,0.16)' },
-  { x: 22, y: 26, scale: 0.92, zIndex: 20, overlay: 0.20, shadow: '0 16px 40px rgba(41,28,14,0.10)' },
-  { x: 32, y: 38, scale: 0.88, zIndex: 10, overlay: 0.30, shadow: '0 8px 24px rgba(41,28,14,0.06)' },
+  { x: 16, y: 16, scale: 1, zIndex: 30, overlay: 0.12, shadow: '0 24px 60px rgba(41,28,14,0.16)' },
+  { x: 32, y: 32, scale: 1, zIndex: 20, overlay: 0.24, shadow: '0 16px 40px rgba(41,28,14,0.10)' },
+  { x: 48, y: 48, scale: 1, zIndex: 10, overlay: 0.36, shadow: '0 8px 24px rgba(41,28,14,0.06)' },
 ];
 
 const mobilePos = [
   { x: 0, y: 0, scale: 1, zIndex: 40, overlay: 0, shadow: '0 32px 80px rgba(41,28,14,0.22)' },
-  { x: 8, y: 10, scale: 0.96, zIndex: 30, overlay: 0.10, shadow: '0 24px 60px rgba(41,28,14,0.16)' },
-  { x: 14, y: 18, scale: 0.92, zIndex: 20, overlay: 0.20, shadow: '0 16px 40px rgba(41,28,14,0.10)' },
-  { x: 20, y: 26, scale: 0.88, zIndex: 10, overlay: 0.30, shadow: '0 8px 24px rgba(41,28,14,0.06)' },
+  { x: 10, y: 10, scale: 1, zIndex: 30, overlay: 0.12, shadow: '0 24px 60px rgba(41,28,14,0.16)' },
+  { x: 20, y: 20, scale: 1, zIndex: 20, overlay: 0.24, shadow: '0 16px 40px rgba(41,28,14,0.10)' },
+  { x: 30, y: 30, scale: 1, zIndex: 10, overlay: 0.36, shadow: '0 8px 24px rgba(41,28,14,0.06)' },
 ];
 
 const CardStack = ({ positions, cardW, cardH, containerW, containerH }: {
@@ -115,7 +115,7 @@ const CardStack = ({ positions, cardW, cardH, containerW, containerH }: {
 
 const HeroSection = () => {
   return (
-    <section className="min-h-[90vh] bg-background relative overflow-hidden">
+    <section className="min-h-[90vh] bg-background relative overflow-x-clip">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 lg:px-[60px] flex flex-col lg:flex-row items-center py-16 lg:py-0 min-h-[90vh]">
         {/* Left 55% */}
         <div className="w-full lg:w-[55%] flex flex-col justify-center py-12">
