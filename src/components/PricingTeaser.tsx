@@ -4,34 +4,37 @@ import { usePlanTracking } from '@/hooks/usePlanTracking';
 import { trackEvent } from '@/hooks/useTrackEvent';
 
 const plans = [
-  { name: 'starter', label: 'STARTER', price: 699, priceStr: '₹699', popular: false, features: ['40 image generations/month', '3 model options', 'Gemstone & metal swap'] },
-  { name: 'growth', label: 'GROWTH', price: 1799, priceStr: '₹1,799', popular: true, features: ['150 image generations/month', '8 model options', 'Batch processing — up to 5 images', 'Priority queue — under 60 seconds', 'Diamond rate calculator'] },
-  { name: 'pro', label: 'PRO', price: 3999, priceStr: '₹3,999', popular: false, features: ['400 image generations/month', 'Batch up to 10 images', 'Catalog shoot mode', 'Custom prompts + no watermark'] },
+  { name: 'starter', label: 'Starter', price: 699, priceStr: '₹699', popular: false, features: ['40 images/month', '3 model options', 'Gemstone & metal swap'] },
+  { name: 'growth', label: 'Growth', price: 1799, priceStr: '₹1,799', popular: true, features: ['150 images/month', '8 model options', 'Batch up to 5 images', 'Priority queue', 'Diamond rate calculator'] },
+  { name: 'pro', label: 'Pro', price: 3999, priceStr: '₹3,999', popular: false, features: ['400 images/month', 'Batch up to 10 images', 'Catalog shoot mode', 'Custom prompts + no watermark'] },
 ];
 
 const PricingTeaser = () => {
   const { trackPlanView, trackPlanCTA } = usePlanTracking();
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-60px' });
-
-  if (isInView) {
-    trackEvent('pricing_viewed');
-  }
+  if (isInView) trackEvent('pricing_viewed');
 
   return (
-    <section ref={sectionRef} className="bg-background py-[60px] md:py-[120px]" id="pricing">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-[60px]">
-        <motion.p initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true, margin: '-60px' }} className="font-body text-[11px] md:text-[12px] uppercase tracking-[0.18em] md:tracking-[0.2em] text-primary text-center mb-3 md:mb-4">
-          ✦&nbsp; SIMPLE PRICING &nbsp;✦
-        </motion.p>
-        <motion.h2 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} viewport={{ once: true, margin: '-60px' }} className="font-heading text-[clamp(28px,6vw,52px)] font-medium text-foreground text-center mb-3 md:mb-4">
-          Less Than ₹25 a Day.
-        </motion.h2>
-        <motion.p initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }} viewport={{ once: true, margin: '-60px' }} className="font-body text-[14px] md:text-[18px] text-nakshi-text-body text-center max-w-[500px] mx-auto mb-10 md:mb-16">
-          A studio shoot costs ₹15,000–50,000. Nakshi AI costs ₹699 a month.
-        </motion.p>
+    <section ref={sectionRef} className="bg-background py-[72px] md:py-[140px] section-editorial texture-noise" id="pricing">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-16 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, margin: '-80px' }}
+          className="text-center mb-14 md:mb-20"
+        >
+          <p className="badge-editorial justify-center mb-5">Simple Pricing</p>
+          <h2 className="font-heading text-[clamp(30px,6vw,60px)] font-light text-foreground mb-4">
+            Less Than <em className="font-semibold not-italic text-gold-shine">₹25 a Day</em>
+          </h2>
+          <p className="font-body text-[13px] md:text-[15px] text-muted-foreground max-w-[420px] mx-auto">
+            A studio shoot costs ₹15,000. Nakshi AI costs ₹699 a month.
+          </p>
+        </motion.div>
 
-        {/* Mobile: Horizontal scroll pricing cards */}
+        {/* Mobile: Swipe cards */}
         <div className="md:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-5 px-5 scrollbar-hide">
           {plans.map((plan, i) => (
             <PlanCard key={plan.name} plan={plan} index={i} isMobile onView={() => trackPlanView(plan.name, plan.price)} onCTA={() => trackPlanCTA(plan.name, plan.price)} />
@@ -44,10 +47,6 @@ const PricingTeaser = () => {
             <PlanCard key={plan.name} plan={plan} index={i} onView={() => trackPlanView(plan.name, plan.price)} onCTA={() => trackPlanCTA(plan.name, plan.price)} />
           ))}
         </div>
-
-        <div className="text-center mt-8 md:mt-10">
-          <a href="/pricing" className="font-body text-[13px] md:text-[14px] text-primary underline hover:text-foreground transition-colors">See all plans →</a>
-        </div>
       </div>
     </section>
   );
@@ -56,7 +55,6 @@ const PricingTeaser = () => {
 const PlanCard = ({ plan, index, isMobile, onView, onCTA }: { plan: typeof plans[0]; index: number; isMobile?: boolean; onView: () => void; onCTA: () => void }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
-
   if (isInView) onView();
 
   const handleCTA = (e: React.MouseEvent) => {
@@ -71,49 +69,52 @@ const PlanCard = ({ plan, index, isMobile, onView, onCTA }: { plan: typeof plans
       ref={ref}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+      transition={{ duration: 0.7, delay: index * 0.1 }}
       viewport={{ once: true, margin: '-60px' }}
-      className={`relative flex flex-col overflow-visible ${
-        isMobile ? 'snap-center flex-shrink-0 w-[280px] p-6' : 'p-8'
-      } ${
-        plan.popular
-          ? 'border-2 border-primary md:-mt-4 md:mb-[-16px]'
-          : 'bg-background border border-border'
-      }`}
+      className={`relative flex flex-col ${isMobile ? 'snap-center flex-shrink-0 w-[280px]' : ''}`}
       style={{
-        borderRadius: 8,
-        background: plan.popular ? '#FFF2DF' : undefined,
-        boxShadow: plan.popular
-          ? '0 12px 40px rgba(184,134,11,0.15)'
-          : '0 2px 12px rgba(41,28,14,0.04)',
+        borderRadius: 6,
+        background: plan.popular ? 'hsl(var(--foreground))' : 'hsl(var(--card))',
+        border: plan.popular ? 'none' : '1px solid hsl(var(--border))',
+        boxShadow: plan.popular ? 'var(--shadow-editorial)' : 'var(--shadow-card)',
+        padding: isMobile ? '24px' : '36px',
+        ...(plan.popular && !isMobile ? { marginTop: -16, marginBottom: -16 } : {}),
       }}
     >
       {plan.popular && (
         <span
-          className="absolute -top-[14px] left-1/2 -translate-x-1/2 font-body text-[10px] md:text-[11px] font-semibold uppercase bg-primary text-primary-foreground px-4 md:px-5 py-1.5 whitespace-nowrap"
-          style={{ borderRadius: 100, letterSpacing: '0.08em' }}
+          className="absolute -top-3 left-1/2 -translate-x-1/2 font-body text-[9px] font-bold uppercase tracking-[0.2em] bg-primary text-primary-foreground px-5 py-1.5 whitespace-nowrap"
+          style={{ borderRadius: 100 }}
         >
-          ★ Most Popular
+          Most Popular
         </span>
       )}
-      <p className="font-body text-[11px] md:text-[12px] uppercase tracking-[0.15em] text-primary mb-3 md:mb-4">{plan.label}</p>
-      <div className="flex items-baseline gap-1 mb-4 md:mb-6">
-        <span className="font-heading text-[36px] md:text-[48px] font-semibold text-foreground leading-none">{plan.priceStr}</span>
-        <span className="font-body text-[14px] md:text-[15px] text-muted-foreground">/month</span>
+      <p className={`font-body text-[10px] uppercase tracking-[0.2em] mb-4 ${plan.popular ? 'text-nakshi-gold-light' : 'text-primary'}`}>
+        {plan.label}
+      </p>
+      <div className="flex items-baseline gap-1 mb-6">
+        <span className={`font-heading text-[40px] md:text-[52px] font-semibold leading-none ${plan.popular ? 'text-nakshi-text-on-dark' : 'text-foreground'}`}>
+          {plan.priceStr}
+        </span>
+        <span className={`font-body text-[13px] ${plan.popular ? 'text-nakshi-text-on-dark/50' : 'text-muted-foreground'}`}>/mo</span>
       </div>
-      <div className="border-t border-border my-3 md:my-4" />
-      <ul className="space-y-2.5 md:space-y-3 mb-6 md:mb-8 flex-1">
+      <div className="h-[1px] mb-5" style={{ background: plan.popular ? 'rgba(255,255,255,0.08)' : 'hsl(var(--border))' }} />
+      <ul className="space-y-3 mb-8 flex-1">
         {plan.features.map((f, j) => (
-          <li key={j} className="flex items-start gap-2 md:gap-2.5 font-body text-[13px] md:text-[14px] text-nakshi-text-body">
-            <span className="text-primary font-bold mt-0.5 flex-shrink-0">✓</span>
+          <li key={j} className={`flex items-start gap-2.5 font-body text-[13px] ${plan.popular ? 'text-nakshi-text-on-dark/80' : 'text-nakshi-text-body'}`}>
+            <span className={`font-bold mt-0.5 flex-shrink-0 ${plan.popular ? 'text-primary' : 'text-primary'}`}>✓</span>
             <span>{f}</span>
           </li>
         ))}
       </ul>
       <button
         onClick={handleCTA}
-        className="block w-full text-center font-body text-[13px] md:text-[14px] font-semibold bg-primary text-primary-foreground py-3 md:py-3.5 hover:bg-foreground active:scale-[0.98] transition-all duration-200"
-        style={{ borderRadius: 4 }}
+        className={`block w-full text-center font-body text-[12px] font-semibold tracking-wider uppercase py-3.5 active:scale-[0.98] transition-all duration-300 ${
+          plan.popular
+            ? 'bg-primary text-primary-foreground hover:bg-nakshi-gold-light'
+            : 'bg-foreground text-background hover:bg-primary hover:text-primary-foreground'
+        }`}
+        style={{ borderRadius: 2 }}
       >
         Join Waitlist →
       </button>

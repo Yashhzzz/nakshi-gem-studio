@@ -14,7 +14,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 80);
+    const handler = () => setScrolled(window.scrollY > 60);
     window.addEventListener('scroll', handler);
     return () => window.removeEventListener('scroll', handler);
   }, []);
@@ -22,45 +22,48 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`sticky top-0 z-[100] h-[56px] md:h-[72px] flex items-center justify-between px-5 md:px-10 lg:px-[60px] transition-all duration-200 ${
-          scrolled ? 'border-b border-border' : ''
+        className={`sticky top-0 z-[100] h-[56px] md:h-[68px] flex items-center justify-between px-5 md:px-10 lg:px-16 transition-all duration-300 ${
+          scrolled ? 'border-b border-border/50 shadow-sm' : ''
         }`}
-        style={{ background: 'hsla(40,25%,97%,0.95)', backdropFilter: 'blur(12px)' }}
+        style={{
+          background: scrolled ? 'hsla(40,20%,96%,0.92)' : 'hsla(40,20%,96%,0.98)',
+          backdropFilter: 'blur(16px)',
+        }}
       >
-        <a href="#" className="flex flex-col leading-tight">
-          <span className="font-heading font-semibold text-[20px] md:text-[22px] tracking-[0.1em] text-foreground">
+        <a href="#" className="flex flex-col leading-tight group">
+          <span className="font-heading font-semibold text-[20px] md:text-[22px] tracking-[0.12em] text-foreground group-hover:text-primary transition-colors duration-300">
             NAKSHI AI
           </span>
-          <span className="font-hindi text-[11px] md:text-[12px] text-primary">नक्शी</span>
+          <span className="font-hindi text-[10px] md:text-[11px] text-primary/70">नक्शी</span>
         </a>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-10">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="font-body text-[15px] text-nakshi-text-body hover:text-foreground relative group transition-colors duration-200"
+              className="font-body text-[13px] tracking-wide text-muted-foreground hover:text-foreground relative group transition-colors duration-300"
             >
               {link.label}
-              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-foreground group-hover:w-full transition-all duration-300" />
+              <span className="absolute -bottom-0.5 left-0 w-0 h-[1px] bg-primary group-hover:w-full transition-all duration-400 ease-out" />
             </a>
           ))}
         </div>
 
-        <div className="flex items-center gap-3 md:gap-4">
+        <div className="flex items-center gap-3">
           <a
             href="#waitlist"
-            className="hidden sm:inline-flex font-body text-[13px] md:text-[14px] font-medium bg-primary text-primary-foreground px-4 md:px-[22px] py-2.5 md:py-[10px] hover:bg-foreground transition-colors duration-200"
-            style={{ borderRadius: 2 }}
+            className="hidden sm:inline-flex font-body text-[12px] md:text-[13px] font-semibold tracking-wider uppercase bg-foreground text-background px-5 md:px-6 py-2.5 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+            style={{ borderRadius: 1 }}
           >
-            Join Waitlist →
+            Join Waitlist
           </a>
           <button
             className="md:hidden text-foreground p-1"
             onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
           >
-            <Menu size={22} />
+            <Menu size={22} strokeWidth={1.5} />
           </button>
         </div>
       </nav>
@@ -71,36 +74,48 @@ const Navbar = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[200] flex flex-col items-center justify-center gap-7"
-            style={{ background: '#291C0E' }}
+            transition={{ duration: 0.4 }}
+            className="fixed inset-0 z-[200] flex flex-col items-center justify-center gap-8"
+            style={{ background: 'hsl(var(--nakshi-darkest))' }}
           >
             <button
               onClick={() => setMenuOpen(false)}
-              className="absolute top-4 right-4 p-1"
-              style={{ color: '#D3A376' }}
+              className="absolute top-5 right-5 p-1 text-nakshi-gold-light/70 hover:text-nakshi-gold-light transition-colors"
               aria-label="Close menu"
             >
-              <X size={26} />
+              <X size={24} strokeWidth={1.5} />
             </button>
-            {navLinks.map((link) => (
-              <a
+
+            {/* Decorative top line */}
+            <div className="w-12 h-[1px] bg-nakshi-gold-light/30 mb-4" />
+
+            {navLinks.map((link, i) => (
+              <motion.a
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="font-heading text-[28px] md:text-[36px] text-nakshi-text-on-dark hover:text-primary transition-colors"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.08, duration: 0.4 }}
+                className="font-heading text-[32px] font-light italic text-nakshi-text-on-dark/90 hover:text-primary transition-colors"
               >
                 {link.label}
-              </a>
+              </motion.a>
             ))}
-            <a
+
+            <div className="w-12 h-[1px] bg-nakshi-gold-light/30 mt-2" />
+
+            <motion.a
               href="#waitlist"
               onClick={() => setMenuOpen(false)}
-              className="font-body text-[15px] md:text-[16px] font-semibold bg-primary text-primary-foreground px-7 md:px-8 py-3.5 md:py-4 mt-4 active:scale-[0.98] transition-transform"
-              style={{ borderRadius: 2 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.4 }}
+              className="font-body text-[13px] font-semibold tracking-wider uppercase bg-primary text-primary-foreground px-8 py-3.5 mt-2 active:scale-[0.98] transition-transform"
+              style={{ borderRadius: 1 }}
             >
               Join Waitlist →
-            </a>
+            </motion.a>
           </motion.div>
         )}
       </AnimatePresence>

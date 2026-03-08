@@ -4,36 +4,50 @@
 
 @layer base {
   :root {
-    --background: 40 25% 97%;
-    --foreground: 31 49% 11%;
-    --card: 40 25% 97%;
-    --card-foreground: 31 49% 11%;
-    --popover: 40 25% 97%;
-    --popover-foreground: 31 49% 11%;
-    --primary: 43 89% 38%;
-    --primary-foreground: 36 100% 94%;
-    --secondary: 42 29% 94%;
-    --secondary-foreground: 31 49% 11%;
-    --muted: 32 27% 72%;
-    --muted-foreground: 27 20% 56%;
-    --accent: 36 33% 84%;
-    --accent-foreground: 31 49% 11%;
-    --destructive: 0 68% 32%;
-    --destructive-foreground: 36 100% 94%;
-    --border: 33 24% 78%;
-    --input: 33 24% 78%;
-    --ring: 43 89% 38%;
-    --radius: 0.25rem;
+    --background: 40 20% 96%;
+    --foreground: 20 30% 8%;
+    --card: 38 22% 95%;
+    --card-foreground: 20 30% 8%;
+    --popover: 40 20% 96%;
+    --popover-foreground: 20 30% 8%;
+    --primary: 38 72% 42%;
+    --primary-foreground: 40 60% 96%;
+    --secondary: 38 18% 93%;
+    --secondary-foreground: 20 30% 8%;
+    --muted: 30 15% 75%;
+    --muted-foreground: 25 12% 50%;
+    --accent: 35 25% 88%;
+    --accent-foreground: 20 30% 8%;
+    --destructive: 0 65% 35%;
+    --destructive-foreground: 40 60% 96%;
+    --border: 35 18% 82%;
+    --input: 35 18% 82%;
+    --ring: 38 72% 42%;
+    --radius: 0.375rem;
 
-    /* Nakshi custom tokens */
-    --nakshi-dark: 6 29% 19%;
-    --nakshi-darkest: 31 49% 11%;
-    --nakshi-gold-light: 29 52% 65%;
-    --nakshi-text-body: 14 30% 33%;
-    --nakshi-text-on-dark: 36 100% 94%;
+    /* Nakshi luxury tokens */
+    --nakshi-dark: 15 35% 14%;
+    --nakshi-darkest: 20 40% 7%;
+    --nakshi-gold-light: 32 55% 62%;
+    --nakshi-gold-glow: 38 80% 52%;
+    --nakshi-cream: 40 40% 97%;
+    --nakshi-text-body: 20 18% 38%;
+    --nakshi-text-on-dark: 40 60% 95%;
     --nakshi-whatsapp: 142 70% 49%;
-    --nakshi-success: 138 25% 39%;
-    --nakshi-placeholder: 34 12% 70%;
+    --nakshi-success: 142 35% 42%;
+    --nakshi-placeholder: 30 10% 65%;
+
+    /* Editorial gradients */
+    --gradient-gold: linear-gradient(135deg, hsl(38 72% 42%), hsl(32 55% 62%));
+    --gradient-dark: linear-gradient(180deg, hsl(20 40% 7%), hsl(15 35% 14%));
+    --gradient-warm: linear-gradient(180deg, hsl(40 20% 96%), hsl(38 18% 93%));
+    --gradient-editorial: linear-gradient(135deg, hsl(20 40% 7%) 0%, hsl(15 30% 18%) 100%);
+
+    /* Luxury shadows */
+    --shadow-editorial: 0 24px 80px -16px rgba(20, 12, 4, 0.18);
+    --shadow-card: 0 1px 3px rgba(20, 12, 4, 0.04), 0 12px 40px -8px rgba(20, 12, 4, 0.08);
+    --shadow-card-hover: 0 1px 3px rgba(20, 12, 4, 0.04), 0 20px 60px -12px rgba(20, 12, 4, 0.14);
+    --shadow-gold-glow: 0 8px 40px -8px rgba(180, 130, 20, 0.25);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -51,6 +65,8 @@
 
   html {
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
@@ -59,7 +75,43 @@
   }
 }
 
-/* Marquee */
+/* ─── Noise texture overlay ─── */
+.texture-noise::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px;
+}
+
+/* ─── Editorial divider ─── */
+.editorial-divider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.editorial-divider::before,
+.editorial-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
+}
+
+/* ─── Gold shine effect on text ─── */
+.text-gold-shine {
+  background: linear-gradient(135deg, hsl(38 72% 42%) 0%, hsl(38 80% 56%) 40%, hsl(32 55% 62%) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Marquee ─── */
 .marquee-track {
   overflow: hidden;
   white-space: nowrap;
@@ -76,45 +128,48 @@
   100% { transform: translateX(-50%); }
 }
 
-/* Decorative star rotation */
+/* ─── Decorative star rotation ─── */
 @keyframes star-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
-/* Confetti burst */
+/* ─── Confetti burst ─── */
 @keyframes confetti {
-  0% {
-    transform: translateY(-20px) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(400px) rotate(720deg);
-    opacity: 0;
-  }
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(400px) rotate(720deg); opacity: 0; }
 }
 
-/* Tooltip fade in */
+/* ─── Tooltip fade in ─── */
 @keyframes fade-in-left {
   from { opacity: 0; transform: translateX(8px); }
   to { opacity: 1; transform: translateX(0); }
 }
 
-/* Footer link hover */
+/* ─── Subtle float animation ─── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ─── Footer link hover ─── */
+.footer-link {
+  transition: all 200ms ease-out;
+}
 .footer-link:hover {
-  color: #D3A376 !important;
+  color: hsl(var(--nakshi-gold-light)) !important;
   transform: translateX(4px);
 }
 
-/* Footer social icon hover */
+/* ─── Footer social icon hover ─── */
 .footer-social-icon {
   transition: all 200ms ease-out;
 }
 .footer-social-icon:hover svg {
-  fill: #D3A376;
+  fill: hsl(var(--nakshi-gold-light));
 }
 
-/* Hide scrollbar for horizontal scroll cards */
+/* ─── Scrollbar hiding ─── */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -123,9 +178,46 @@
   display: none;
 }
 
-/* Mobile tap highlight removal */
+/* ─── Mobile tap highlight removal ─── */
 @media (max-width: 767px) {
   button, a {
     -webkit-tap-highlight-color: transparent;
   }
+}
+
+/* ─── Editorial section spacing ─── */
+.section-editorial {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ─── Luxury card treatment ─── */
+.card-luxury {
+  position: relative;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  box-shadow: var(--shadow-card);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.card-luxury:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: hsl(var(--primary) / 0.3);
+  transform: translateY(-2px);
+}
+
+/* ─── Editorial badge ─── */
+.badge-editorial {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: hsl(var(--primary));
+}
+.badge-editorial::before {
+  content: '✦';
+  font-size: 8px;
 }
