@@ -18,21 +18,23 @@ const cardData = [
   { src: heroCardEarrings, alt: 'Diamond earrings', label: 'Batch Ready' },
 ];
 
-const desktopPositions = [
+const desktopPos = [
   { x: 0, y: 0, scale: 1, zIndex: 40, overlay: 0, shadow: '0 32px 80px rgba(41,28,14,0.22)' },
   { x: 12, y: 14, scale: 0.96, zIndex: 30, overlay: 0.10, shadow: '0 24px 60px rgba(41,28,14,0.16)' },
   { x: 22, y: 26, scale: 0.92, zIndex: 20, overlay: 0.20, shadow: '0 16px 40px rgba(41,28,14,0.10)' },
   { x: 32, y: 38, scale: 0.88, zIndex: 10, overlay: 0.30, shadow: '0 8px 24px rgba(41,28,14,0.06)' },
 ];
 
-const mobilePositions = [
+const mobilePos = [
   { x: 0, y: 0, scale: 1, zIndex: 40, overlay: 0, shadow: '0 32px 80px rgba(41,28,14,0.22)' },
   { x: 8, y: 10, scale: 0.96, zIndex: 30, overlay: 0.10, shadow: '0 24px 60px rgba(41,28,14,0.16)' },
   { x: 14, y: 18, scale: 0.92, zIndex: 20, overlay: 0.20, shadow: '0 16px 40px rgba(41,28,14,0.10)' },
   { x: 20, y: 26, scale: 0.88, zIndex: 10, overlay: 0.30, shadow: '0 8px 24px rgba(41,28,14,0.06)' },
 ];
 
-const HeroSection = () => {
+const CardStack = ({ positions, cardW, cardH, containerW, containerH }: {
+  positions: typeof desktopPos; cardW: number; cardH: number; containerW: number; containerH: number;
+}) => {
   const [order, setOrder] = useState([0, 1, 2, 3]);
 
   useEffect(() => {
@@ -45,8 +47,42 @@ const HeroSection = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // No need for renderOrder — we render all 4 and use z-index for stacking
+  return (
+    <div className="relative flex-shrink-0" style={{ width: containerW, height: containerH }}>
+      {order.map((cardIndex, posIdx) => {
+        const pos = positions[posIdx];
+        return (
+          <div
+            key={cardIndex}
+            className="absolute overflow-hidden"
+            style={{
+              width: cardW,
+              height: cardH,
+              borderRadius: 12,
+              top: 0,
+              left: 0,
+              transform: `translateX(${pos.x}px) translateY(${pos.y}px) scale(${pos.scale})`,
+              transformOrigin: 'top left',
+              zIndex: pos.zIndex,
+              pointerEvents: 'none',
+              boxShadow: pos.shadow,
+            }}
+          >
+            <img src={cardData[cardIndex].src} alt={cardData[cardIndex].alt} className="w-full h-full object-cover" loading="lazy" draggable={false} />
+            {pos.overlay > 0 && (
+              <div className="absolute inset-0 pointer-events-none" style={{ borderRadius: 12, background: `rgba(41,28,14,${pos.overlay})`, zIndex: 2 }} />
+            )}
+            <span className="absolute bottom-4 left-4 font-body text-[12px] font-medium" style={{ background: 'rgba(250,249,246,0.92)', backdropFilter: 'blur(8px)', borderRadius: 4, padding: '6px 14px', color: '#291C0E', zIndex: 3 }}>
+              {cardData[cardIndex].label}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
+const HeroSection = () => {
   return (
     <section className="min-h-[90vh] bg-background relative overflow-hidden">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 lg:px-[60px] flex flex-col lg:flex-row items-center py-16 lg:py-0 min-h-[90vh]">
@@ -93,68 +129,13 @@ const HeroSection = () => {
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
           className="w-full lg:w-[45%] flex justify-center items-center relative mt-12 lg:mt-0"
         >
-          {/* Desktop stack */}
-          <div className="relative hidden md:block" style={{ width: 344, height: 452 + 32 }}>
-            {renderOrder.map((cardIndex) => {
-              const positionInStack = order.indexOf(cardIndex);
-              const offset = peekOffsets[positionInStack];
-
-              return (
-                <div
-                  key={cardIndex}
-                  className="absolute overflow-hidden"
-                  style={{
-                    width: 320, height: 420, borderRadius: 8,
-                    top: offset.y, left: offset.x,
-                    transform: `scale(${offset.scale})`,
-                    transformOrigin: 'top left',
-                    zIndex: 4 - positionInStack,
-                    pointerEvents: 'none',
-                    boxShadow: '0 24px 60px rgba(41,28,14,0.18)',
-                  }}
-                >
-                  <img src={cardData[cardIndex].src} alt={cardData[cardIndex].alt} className="w-full h-full object-cover" loading="lazy" draggable={false} />
-                  {offset.overlay > 0 && (
-                    <div className="absolute inset-0" style={{ background: `rgba(41,28,14,${offset.overlay})` }} />
-                  )}
-                  <span className="absolute bottom-4 left-4 font-body text-[12px] font-medium" style={{ background: 'rgba(250,249,246,0.92)', backdropFilter: 'blur(8px)', borderRadius: 4, padding: '6px 14px', color: '#291C0E' }}>
-                    {cardData[cardIndex].label}
-                  </span>
-                </div>
-              );
-            })}
+          {/* Desktop */}
+          <div className="hidden md:block">
+            <CardStack positions={desktopPos} cardW={300} cardH={400} containerW={340} containerH={560} />
           </div>
-
-          {/* Mobile stack */}
-          <div className="relative md:hidden" style={{ width: 284, height: 362 + 22 }}>
-            {renderOrder.map((cardIndex) => {
-              const positionInStack = order.indexOf(cardIndex);
-              const offset = peekOffsetsMobile[positionInStack];
-
-              return (
-                <div
-                  key={cardIndex}
-                  className="absolute overflow-hidden"
-                  style={{
-                    width: 260, height: 340, borderRadius: 8,
-                    top: offset.y, left: offset.x,
-                    transform: `scale(${offset.scale})`,
-                    transformOrigin: 'top left',
-                    zIndex: 4 - positionInStack,
-                    pointerEvents: 'none',
-                    boxShadow: '0 24px 60px rgba(41,28,14,0.18)',
-                  }}
-                >
-                  <img src={cardData[cardIndex].src} alt={cardData[cardIndex].alt} className="w-full h-full object-cover" loading="lazy" draggable={false} />
-                  {offset.overlay > 0 && (
-                    <div className="absolute inset-0" style={{ background: `rgba(41,28,14,${offset.overlay})` }} />
-                  )}
-                  <span className="absolute bottom-4 left-4 font-body text-[12px] font-medium" style={{ background: 'rgba(250,249,246,0.92)', backdropFilter: 'blur(8px)', borderRadius: 4, padding: '6px 14px', color: '#291C0E' }}>
-                    {cardData[cardIndex].label}
-                  </span>
-                </div>
-              );
-            })}
+          {/* Mobile */}
+          <div className="md:hidden">
+            <CardStack positions={mobilePos} cardW={248} cardH={340} containerW={280} containerH={480} />
           </div>
         </motion.div>
       </div>
