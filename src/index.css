@@ -59,7 +59,18 @@
   }
 }
 
-/* Marquee scroll */
+/* Marquee */
+.marquee-track {
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-content {
+  display: inline-block;
+  animation: marquee 30s linear infinite;
+}
+.marquee-track:hover .marquee-content {
+  animation-play-state: paused;
+}
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -87,4 +98,18 @@
 @keyframes fade-in-left {
   from { opacity: 0; transform: translateX(8px); }
   to { opacity: 1; transform: translateX(0); }
+}
+
+/* Footer link hover */
+.footer-link:hover {
+  color: #D3A376 !important;
+  transform: translateX(4px);
+}
+
+/* Footer social icon hover */
+.footer-social-icon {
+  transition: all 200ms ease-out;
+}
+.footer-social-icon:hover svg {
+  fill: #D3A376;
 }

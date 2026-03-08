@@ -24,7 +24,7 @@ const HeroSection = () => {
 
           <motion.h1 {...fadeUp(0.1)} className="leading-[1.1]" style={{ fontSize: 'clamp(52px, 7vw, 88px)' }}>
             <span className="font-heading font-light italic text-foreground block">Your Jewelry.</span>
-            <span className="font-heading font-semibold text-foreground block">On a Model.</span>
+            <span className="font-heading font-semibold text-foreground block" style={{ fontStyle: 'normal' }}>On a Model.</span>
             <span className="font-heading font-light italic text-foreground block">In 60 Seconds.</span>
           </motion.h1>
 
@@ -49,21 +49,21 @@ const HeroSection = () => {
           </motion.p>
         </div>
 
-        {/* Right 45% */}
+        {/* Right 45% — overlapping cards */}
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
           className="w-full lg:w-[45%] flex justify-center items-center relative mt-12 lg:mt-0"
         >
-          <div className="relative" style={{ width: 360, height: 440 }}>
-            {/* Card 1 — Back */}
+          <div className="relative" style={{ width: 380, height: 440 }}>
+            {/* Card 1 — Back (hidden on mobile) */}
             <div
-              className="absolute overflow-hidden"
+              className="absolute overflow-hidden hidden md:block"
               style={{
                 width: 280, height: 380, borderRadius: 4,
                 transform: 'rotate(-3deg)',
-                top: 20, left: 0,
+                top: 40, left: 0, zIndex: 1,
                 boxShadow: '0 24px 60px rgba(41,28,14,0.15)',
               }}
             >
@@ -73,13 +73,13 @@ const HeroSection = () => {
               </span>
             </div>
 
-            {/* Card 2 — Middle */}
+            {/* Card 2 — Middle (hidden on mobile) */}
             <div
-              className="absolute overflow-hidden"
+              className="absolute overflow-hidden hidden md:block"
               style={{
                 width: 280, height: 380, borderRadius: 4,
                 transform: 'rotate(1deg)',
-                top: 10, left: 40,
+                top: 20, left: 16, zIndex: 2,
                 boxShadow: '0 24px 60px rgba(41,28,14,0.15)',
               }}
             >
@@ -89,12 +89,12 @@ const HeroSection = () => {
               </span>
             </div>
 
-            {/* Card 3 — Front */}
+            {/* Card 3 — Front (always visible) */}
             <div
-              className="absolute overflow-hidden"
+              className="absolute overflow-hidden md:left-[32px] left-[50px]"
               style={{
                 width: 280, height: 380, borderRadius: 4,
-                top: 0, left: 80,
+                top: 0, zIndex: 3,
                 boxShadow: '0 24px 60px rgba(41,28,14,0.15)',
               }}
             >

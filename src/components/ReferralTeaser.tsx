@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 const ReferralTeaser = () => {
   return (
-    <section className="bg-accent py-[100px]" id="referral">
+    <section className="bg-accent py-[80px] md:py-[100px]" id="referral">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 lg:px-[60px] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <motion.div
           initial={{ opacity: 0, y: 32 }}
@@ -19,9 +19,24 @@ const ReferralTeaser = () => {
           <p className="font-body text-[16px] text-nakshi-text-body max-w-[440px] leading-relaxed mb-6">
             Every time someone you refer subscribes to Growth or Pro, you earn ₹250 — straight to your Nakshi AI wallet. They get ₹250 off their first month too. Earn up to ₹2,500 every month.
           </p>
-          <a href="#referral" className="font-body text-[14px] text-primary underline hover:text-foreground transition-colors">
+          <a href="#referral" className="font-body text-[14px] text-primary underline hover:text-foreground transition-colors block mb-6">
             Learn How Referrals Work →
           </a>
+
+          {/* Referral link preview */}
+          <div
+            className="p-5 bg-background"
+            style={{ border: '1px dashed #B8860B', borderRadius: 4 }}
+          >
+            <p className="font-body text-[12px] text-muted-foreground mb-2">Your personal link will look like:</p>
+            <p className="font-body text-[14px] text-primary font-mono mb-3">nakshiai.com/?ref=NAK-X7K2MP</p>
+            <a
+              href="#waitlist"
+              className="font-body text-[13px] text-primary underline hover:text-foreground transition-colors"
+            >
+              Get Your Link → Join the Waitlist
+            </a>
+          </div>
         </motion.div>
 
         <motion.div
