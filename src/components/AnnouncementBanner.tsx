@@ -20,21 +20,23 @@ const AnnouncementBanner = () => {
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ height: 40, opacity: 1 }}
+          initial={{ height: 44, opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="w-full bg-primary flex items-center justify-center relative overflow-hidden"
+          className="w-full flex items-center justify-center relative overflow-hidden"
+          style={{ background: 'hsl(var(--nakshi-darkest))' }}
         >
-          <p className="font-body text-[13px] text-primary-foreground text-center px-10">
-            🎉&nbsp; Nakshi AI is launching in 15 days · Join the waitlist for 20 free images + early access&nbsp;
-            <a href="#waitlist" className="underline font-medium">Join Free →</a>
+          <p className="font-body text-[12px] md:text-[13px] text-nakshi-text-on-dark/90 text-center px-10 tracking-wide">
+            <span className="text-nakshi-gold-light">✦</span>
+            &nbsp; Launching in 15 days · 20 free images + early access&nbsp;
+            <a href="#waitlist" className="text-nakshi-gold-light underline underline-offset-2 font-medium hover:text-primary transition-colors">Join Free →</a>
           </p>
           <button
             onClick={dismiss}
-            className="absolute right-4 text-primary-foreground/80 hover:text-primary-foreground transition-colors"
+            className="absolute right-4 text-nakshi-text-on-dark/50 hover:text-nakshi-text-on-dark transition-colors"
             aria-label="Dismiss banner"
           >
-            <X size={16} />
+            <X size={14} />
           </button>
         </motion.div>
       )}

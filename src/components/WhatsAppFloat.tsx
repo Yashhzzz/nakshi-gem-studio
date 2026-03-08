@@ -10,9 +10,17 @@ const WhatsAppFloat = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[200] flex items-center gap-3">
+    <div className="fixed bottom-5 right-5 z-[200] flex items-center gap-3">
       {hovered && (
-        <div className="font-body text-[13px] px-3 py-2 whitespace-nowrap" style={{ background: '#291C0E', color: '#FFF2DF', borderRadius: 4, animation: 'fade-in-left 0.2s ease-out' }}>
+        <div
+          className="font-body text-[12px] px-3 py-2 whitespace-nowrap tracking-wide"
+          style={{
+            background: 'hsl(var(--nakshi-darkest))',
+            color: 'hsl(var(--nakshi-text-on-dark))',
+            borderRadius: 4,
+            animation: 'fade-in-left 0.2s ease-out',
+          }}
+        >
           Chat on WhatsApp
         </div>
       )}
@@ -23,11 +31,14 @@ const WhatsAppFloat = () => {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onClick={handleClick}
-        className="w-14 h-14 flex items-center justify-center rounded-full hover:scale-110 transition-transform"
-        style={{ background: '#25D366', boxShadow: '0 8px 24px rgba(41,28,14,0.15)' }}
+        className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full hover:scale-110 active:scale-95 transition-transform"
+        style={{
+          background: '#25D366',
+          boxShadow: '0 6px 24px rgba(37,211,102,0.3)',
+        }}
         aria-label="Chat on WhatsApp"
       >
-        <MessageCircle size={24} color="#FFF2DF" />
+        <MessageCircle size={22} color="#FFF" />
       </a>
     </div>
   );

@@ -7,7 +7,7 @@ const features = [
   {
     num: '01',
     title: 'Jewelry on Model',
-    body: 'Send any phone photo of any jewelry piece. Get it back on a professional, photorealistic model in under 60 seconds.',
+    body: 'Send any phone photo. Get it back on a professional, photorealistic model in under 60 seconds.',
     image: featureRingHand,
     alt: 'Gold ring on elegant Indian woman hand',
   },
@@ -21,7 +21,7 @@ const features = [
   {
     num: '03',
     title: 'Batch Processing',
-    body: "Send 10 images at once. Get all 10 back on models in under a minute. Your entire week's new arrivals done before lunch.",
+    body: "Send 10 images at once. Get all 10 back on models in under a minute.",
     image: featureBatchGrid,
     alt: 'Grid of 6 jewelry model shots',
   },
@@ -29,51 +29,50 @@ const features = [
 
 const FeaturesGrid = () => {
   return (
-    <section className="bg-secondary py-[60px] md:py-[120px]" id="features">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-[60px]">
-        <motion.p
+    <section className="bg-secondary py-[72px] md:py-[140px] section-editorial" id="features">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-16 relative z-10">
+        <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true, margin: '-60px' }}
-          className="font-body text-[11px] md:text-[12px] uppercase tracking-[0.18em] md:tracking-[0.2em] text-primary text-center mb-3 md:mb-4"
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, margin: '-80px' }}
+          className="text-center mb-16 md:mb-24"
         >
-          ✦&nbsp; WHAT IT DOES &nbsp;✦
-        </motion.p>
-        <motion.h2
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          viewport={{ once: true, margin: '-60px' }}
-          className="font-heading text-[clamp(26px,6vw,48px)] font-medium text-foreground text-center mb-10 md:mb-16"
-        >
-          Studio-Quality Photography. No Studio Required.
-        </motion.h2>
+          <p className="badge-editorial justify-center mb-5">What It Does</p>
+          <h2 className="font-heading text-[clamp(30px,6vw,60px)] font-light text-foreground">
+            Studio-Quality. <em className="font-semibold not-italic">No Studio.</em>
+          </h2>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
           {features.map((f, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              viewport={{ once: true, margin: '-60px' }}
-              className="bg-background border border-border p-6 md:p-10 relative overflow-hidden group"
-              style={{ borderRadius: 4 }}
+              transition={{ duration: 0.7, delay: i * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
+              viewport={{ once: true, margin: '-80px' }}
+              className="card-luxury group overflow-hidden flex flex-col"
+              style={{ borderRadius: 6 }}
             >
-              <div className="absolute left-0 bottom-0 w-[2px] h-0 bg-primary group-hover:h-full transition-all duration-300 ease-out" />
-              <span className="font-body text-[11px] md:text-[12px] uppercase tracking-[0.15em] text-primary mb-3 md:mb-4 block">
-                {f.num}
-              </span>
-              <h3 className="font-heading text-[22px] md:text-[26px] font-semibold text-foreground mb-2 md:mb-3">{f.title}</h3>
-              <p className="font-body text-[14px] md:text-[15px] text-nakshi-text-body leading-relaxed mb-4 md:mb-6">{f.body}</p>
-              <img
-                src={f.image}
-                alt={f.alt}
-                className="w-full h-40 md:h-48 object-cover"
-                style={{ borderRadius: 4 }}
-                loading="lazy"
-              />
+              {/* Image with overlay */}
+              <div className="relative overflow-hidden">
+                <img
+                  src={f.image}
+                  alt={f.alt}
+                  className="w-full h-48 md:h-56 object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-card/80 via-transparent to-transparent pointer-events-none" />
+                <span className="absolute top-4 left-4 font-body text-[10px] tracking-[0.2em] uppercase text-primary bg-background/80 backdrop-blur-sm px-3 py-1.5" style={{ borderRadius: 2 }}>
+                  {f.num}
+                </span>
+              </div>
+
+              <div className="p-6 md:p-8 flex-1 flex flex-col">
+                <h3 className="font-heading text-[24px] md:text-[28px] font-semibold text-foreground mb-3">{f.title}</h3>
+                <p className="font-body text-[13px] md:text-[14px] text-nakshi-text-body leading-[1.75] flex-1">{f.body}</p>
+              </div>
             </motion.div>
           ))}
         </div>

@@ -7,21 +7,21 @@ const steps = [
     num: '01',
     icon: MessageSquare,
     title: 'Register on WhatsApp',
-    body: "Join the waitlist. On launch day, you get a WhatsApp message with your personal bot link. Tap it. You're in — no app, no login.",
+    body: "Join the waitlist. On launch day, you get a WhatsApp message with your personal bot link. Tap it. You're in.",
     accent: 'hsl(var(--nakshi-whatsapp))',
   },
   {
     num: '02',
     icon: Camera,
     title: 'Send Your Jewelry Photo',
-    body: "Click a photo of any piece — ring, necklace, earrings, bangle, anything. Send it to the bot. Choose your model. That's it.",
+    body: "Click a photo of any piece — ring, necklace, earrings, anything. Send it to the bot. Choose your model. That's it.",
     accent: 'hsl(var(--primary))',
   },
   {
     num: '03',
     icon: Sparkles,
     title: 'Get Your Model Shot',
-    body: 'Within 60 seconds, the same jewelry appears on a professional model. Download it. Send it to your customer. Post it. Done.',
+    body: 'Within 60 seconds, the same jewelry appears on a professional model. Download it. Share it. Done.',
     accent: 'hsl(var(--nakshi-gold-light))',
   },
 ];
@@ -37,182 +37,130 @@ const HowItWorks = () => {
   }, []);
 
   return (
-    <section className="bg-background py-[60px] md:py-[120px] relative overflow-hidden" id="how-it-works">
-      <div className="absolute inset-0 pointer-events-none opacity-[0.03]"
-        style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)',
-          backgroundSize: '48px 48px',
-        }}
-      />
+    <section
+      className="py-[72px] md:py-[140px] section-editorial"
+      id="how-it-works"
+      style={{ background: 'hsl(var(--nakshi-darkest))' }}
+    >
+      {/* Subtle grain */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.04]" style={{
+        backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--nakshi-text-on-dark)) 0.5px, transparent 0)',
+        backgroundSize: '32px 32px',
+      }} />
 
-      <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-[60px] relative z-10">
-        <motion.p
+      <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-16 relative z-10">
+        {/* Header */}
+        <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true, margin: '-60px' }}
-          className="font-body text-[11px] md:text-[12px] uppercase tracking-[0.18em] md:tracking-[0.2em] text-primary text-center mb-3 md:mb-4"
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, margin: '-80px' }}
+          className="text-center mb-16 md:mb-24"
         >
-          ✦&nbsp; HOW IT WORKS &nbsp;✦
-        </motion.p>
-        <motion.h2
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          viewport={{ once: true, margin: '-60px' }}
-          className="font-heading text-[clamp(28px,6vw,52px)] font-medium text-foreground text-center mb-4 md:mb-6"
-        >
-          Three Steps. No Learning Curve.
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.15 }}
-          viewport={{ once: true, margin: '-60px' }}
-          className="font-body text-[14px] md:text-[15px] text-muted-foreground text-center max-w-[480px] mx-auto mb-12 md:mb-20"
-        >
-          From raw photo to model shot in under a minute. Here's the entire workflow.
-        </motion.p>
+          <p className="badge-editorial justify-center mb-5" style={{ color: 'hsl(var(--nakshi-gold-light))' }}>
+            How It Works
+          </p>
+          <h2 className="font-heading text-[clamp(32px,6vw,60px)] font-light text-nakshi-text-on-dark">
+            Three Steps. <em className="font-semibold not-italic text-gold-shine">Zero Friction.</em>
+          </h2>
+          <p className="font-body text-[13px] md:text-[15px] text-nakshi-text-on-dark/50 max-w-[420px] mx-auto mt-5">
+            From raw photo to model shot in under a minute.
+          </p>
+        </motion.div>
 
         {/* Mobile: Vertical timeline */}
-        <div className="md:hidden space-y-6">
+        <div className="md:hidden space-y-8">
           {steps.map((step, i) => {
             const isActive = activeStep === i;
             const Icon = step.icon;
             return (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -16 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
                 viewport={{ once: true }}
                 onClick={() => setActiveStep(i)}
-                className="flex gap-4"
+                className="flex gap-5"
               >
-                {/* Left: Circle + line */}
                 <div className="flex flex-col items-center flex-shrink-0">
                   <motion.div
-                    className="w-14 h-14 rounded-full flex items-center justify-center relative"
+                    className="w-14 h-14 rounded-full flex items-center justify-center"
                     animate={{
-                      background: isActive
-                        ? `linear-gradient(135deg, ${step.accent}20, ${step.accent}08)`
-                        : 'hsl(var(--secondary))',
                       boxShadow: isActive
-                        ? `0 0 0 2px ${step.accent}, 0 8px 24px -4px ${step.accent}30`
-                        : '0 0 0 1px hsl(var(--border))',
+                        ? `0 0 0 1px ${step.accent}, 0 8px 32px -4px ${step.accent}40`
+                        : '0 0 0 1px rgba(255,255,255,0.08)',
+                      background: isActive ? `${step.accent}15` : 'rgba(255,255,255,0.03)',
                     }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.4 }}
                   >
-                    <motion.span
-                      className="absolute -top-1 -right-1 font-body text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center text-primary-foreground"
-                      style={{ background: step.accent }}
-                    >
-                      {step.num}
-                    </motion.span>
-                    <Icon size={24} strokeWidth={1.5} style={{ color: isActive ? step.accent : 'hsl(var(--muted-foreground))' }} />
+                    <Icon size={22} strokeWidth={1.5} style={{ color: isActive ? step.accent : 'rgba(255,255,255,0.3)' }} />
                   </motion.div>
-                  {i < 2 && (
-                    <div className="w-[2px] flex-1 min-h-[20px] mt-2 rounded-full" style={{ background: 'hsl(var(--border))' }} />
-                  )}
+                  {i < 2 && <div className="w-[1px] flex-1 min-h-[16px] mt-3" style={{ background: 'rgba(255,255,255,0.06)' }} />}
                 </div>
-
-                {/* Right: Content */}
-                <div className="pb-2 pt-1">
-                  <motion.h3
-                    className="font-heading text-[20px] font-semibold mb-1.5"
-                    animate={{ color: isActive ? 'hsl(var(--foreground))' : 'hsl(var(--foreground))' }}
-                  >
-                    {step.title}
-                  </motion.h3>
-                  <p className="font-body text-[14px] text-nakshi-text-body leading-relaxed">
-                    {step.body}
-                  </p>
-                  <motion.div
-                    className="h-[2px] mt-3 rounded-full"
-                    style={{ background: step.accent }}
-                    animate={{ width: isActive ? 40 : 0, opacity: isActive ? 1 : 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
+                <div className="pb-2 pt-2">
+                  <p className="font-body text-[10px] tracking-[0.2em] uppercase mb-2" style={{ color: step.accent }}>{step.num}</p>
+                  <h3 className="font-heading text-[22px] font-semibold text-nakshi-text-on-dark mb-2">{step.title}</h3>
+                  <p className="font-body text-[13px] text-nakshi-text-on-dark/60 leading-[1.7]">{step.body}</p>
                 </div>
               </motion.div>
             );
           })}
         </div>
 
-        {/* Desktop: Horizontal with connecting line */}
-        <div className="hidden md:block relative">
-          <div className="absolute top-[52px] left-[16.67%] right-[16.67%] h-[2px] z-0">
-            <div className="w-full h-full bg-border rounded-full overflow-hidden">
+        {/* Desktop: Horizontal */}
+        <div className="hidden md:block">
+          {/* Progress line */}
+          <div className="relative mb-16">
+            <div className="absolute top-[28px] left-[16.67%] right-[16.67%] h-[1px] bg-white/[0.06]">
               <motion.div
-                className="h-full rounded-full"
+                className="h-full"
                 style={{ background: 'hsl(var(--primary))' }}
-                animate={{
-                  width: activeStep === 0 ? '0%' : activeStep === 1 ? '50%' : '100%',
-                }}
-                transition={{ duration: 0.6, ease: 'easeInOut' }}
+                animate={{ width: activeStep === 0 ? '0%' : activeStep === 1 ? '50%' : '100%' }}
+                transition={{ duration: 0.7, ease: 'easeInOut' }}
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-8 relative z-[1]">
+          <div className="grid grid-cols-3 gap-10">
             {steps.map((step, i) => {
               const isActive = activeStep === i;
-              const isPast = activeStep > i;
               const Icon = step.icon;
               return (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: i * 0.15 }}
-                  viewport={{ once: true, margin: '-60px' }}
-                  className="text-center relative cursor-default"
+                  transition={{ duration: 0.7, delay: i * 0.15 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  className="text-center cursor-default"
                   onHoverStart={() => setActiveStep(i)}
                 >
-                  <div className="flex justify-center mb-8">
+                  <div className="flex justify-center mb-10">
                     <motion.div
-                      className="relative w-[104px] h-[104px] rounded-full flex items-center justify-center"
+                      className="w-14 h-14 rounded-full flex items-center justify-center"
                       animate={{
-                        background: isActive
-                          ? `linear-gradient(135deg, ${step.accent}20, ${step.accent}08)`
-                          : isPast
-                            ? `linear-gradient(135deg, ${step.accent}12, transparent)`
-                            : 'hsl(var(--secondary))',
                         boxShadow: isActive
-                          ? `0 0 0 2px ${step.accent}, 0 12px 40px -8px ${step.accent}30`
-                          : isPast
-                            ? `0 0 0 2px ${step.accent}60`
-                            : '0 0 0 1px hsl(var(--border))',
+                          ? `0 0 0 1px ${step.accent}, 0 12px 40px -8px ${step.accent}35`
+                          : '0 0 0 1px rgba(255,255,255,0.08)',
+                        background: isActive ? `${step.accent}12` : 'rgba(255,255,255,0.02)',
                       }}
                       transition={{ duration: 0.4 }}
                     >
-                      <motion.span
-                        className="absolute -top-1 -right-1 font-body text-[11px] font-bold rounded-full w-7 h-7 flex items-center justify-center text-primary-foreground"
-                        style={{ background: step.accent }}
-                        animate={{ scale: isActive ? 1.1 : 1 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        {step.num}
-                      </motion.span>
-                      <motion.div
-                        animate={{
-                          scale: isActive ? 1.15 : 1,
-                          color: isActive || isPast ? step.accent : 'hsl(var(--muted-foreground))',
-                        }}
-                        transition={{ duration: 0.3, type: 'spring', stiffness: 200 }}
-                      >
-                        <Icon size={36} strokeWidth={1.5} />
-                      </motion.div>
+                      <Icon size={24} strokeWidth={1.5} style={{ color: isActive ? step.accent : 'rgba(255,255,255,0.25)' }} />
                     </motion.div>
                   </div>
-                  <h3 className="font-heading text-[26px] font-semibold mb-3">{step.title}</h3>
-                  <p className="font-body text-[15px] text-nakshi-text-body leading-relaxed max-w-[320px] mx-auto">
+
+                  <p className="font-body text-[10px] tracking-[0.25em] uppercase mb-3" style={{ color: step.accent }}>{step.num}</p>
+                  <h3 className="font-heading text-[28px] font-semibold text-nakshi-text-on-dark mb-4">{step.title}</h3>
+                  <p className="font-body text-[14px] text-nakshi-text-on-dark/50 leading-[1.75] max-w-[300px] mx-auto">
                     {step.body}
                   </p>
+
                   <motion.div
-                    className="mx-auto mt-6 h-[3px] rounded-full"
+                    className="mx-auto mt-8 h-[2px] rounded-full"
                     style={{ background: step.accent }}
-                    animate={{ width: isActive ? 48 : 0, opacity: isActive ? 1 : 0 }}
+                    animate={{ width: isActive ? 40 : 0, opacity: isActive ? 0.6 : 0 }}
                     transition={{ duration: 0.4 }}
                   />
                 </motion.div>
@@ -221,18 +169,15 @@ const HowItWorks = () => {
           </div>
         </div>
 
-        {/* Step indicator pills */}
-        <div className="flex justify-center gap-2 mt-8 md:mt-12">
+        {/* Step indicator */}
+        <div className="flex justify-center gap-2 mt-10 md:mt-16">
           {steps.map((step, i) => (
             <motion.button
               key={i}
               onClick={() => setActiveStep(i)}
-              className="h-2 rounded-full border-0 outline-none cursor-pointer"
+              className="h-1.5 rounded-full border-0 outline-none cursor-pointer"
               style={{ background: step.accent }}
-              animate={{
-                width: activeStep === i ? 32 : 8,
-                opacity: activeStep === i ? 1 : 0.3,
-              }}
+              animate={{ width: activeStep === i ? 28 : 6, opacity: activeStep === i ? 0.8 : 0.2 }}
               transition={{ duration: 0.3 }}
             />
           ))}
@@ -243,11 +188,11 @@ const HowItWorks = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
-          className="text-center mt-10 md:mt-14"
+          className="text-center mt-12 md:mt-16"
         >
           <a
             href="#waitlist"
-            className="inline-flex items-center gap-2 font-body text-[13px] md:text-[14px] font-semibold text-primary hover:text-foreground transition-colors group"
+            className="inline-flex items-center gap-2 font-body text-[12px] md:text-[13px] tracking-wider uppercase text-nakshi-gold-light/80 hover:text-nakshi-gold-light transition-colors group"
           >
             Join the Waitlist to Try It First
             <motion.span
