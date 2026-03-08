@@ -18,18 +18,18 @@ const cardData = [
   { src: heroCardEarrings, alt: 'Diamond earrings', label: 'Batch Ready' },
 ];
 
-const peekOffsets = [
-  { y: 0, x: 0, scale: 1, overlay: 0 },
-  { y: 12, x: 8, scale: 0.96, overlay: 0.08 },
-  { y: 22, x: 16, scale: 0.92, overlay: 0.16 },
-  { y: 32, x: 24, scale: 0.88, overlay: 0.24 },
+const desktopPositions = [
+  { x: 0, y: 0, scale: 1, zIndex: 40, overlay: 0, shadow: '0 32px 80px rgba(41,28,14,0.22)' },
+  { x: 12, y: 14, scale: 0.96, zIndex: 30, overlay: 0.10, shadow: '0 24px 60px rgba(41,28,14,0.16)' },
+  { x: 22, y: 26, scale: 0.92, zIndex: 20, overlay: 0.20, shadow: '0 16px 40px rgba(41,28,14,0.10)' },
+  { x: 32, y: 38, scale: 0.88, zIndex: 10, overlay: 0.30, shadow: '0 8px 24px rgba(41,28,14,0.06)' },
 ];
 
-const peekOffsetsMobile = [
-  { y: 0, x: 0, scale: 1, overlay: 0 },
-  { y: 8, x: 6, scale: 0.96, overlay: 0.08 },
-  { y: 15, x: 12, scale: 0.92, overlay: 0.16 },
-  { y: 22, x: 18, scale: 0.88, overlay: 0.24 },
+const mobilePositions = [
+  { x: 0, y: 0, scale: 1, zIndex: 40, overlay: 0, shadow: '0 32px 80px rgba(41,28,14,0.22)' },
+  { x: 8, y: 10, scale: 0.96, zIndex: 30, overlay: 0.10, shadow: '0 24px 60px rgba(41,28,14,0.16)' },
+  { x: 14, y: 18, scale: 0.92, zIndex: 20, overlay: 0.20, shadow: '0 16px 40px rgba(41,28,14,0.10)' },
+  { x: 20, y: 26, scale: 0.88, zIndex: 10, overlay: 0.30, shadow: '0 8px 24px rgba(41,28,14,0.06)' },
 ];
 
 const HeroSection = () => {
