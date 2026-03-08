@@ -45,7 +45,7 @@ const HeroSection = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const renderOrder = [...order].reverse();
+  // No need for renderOrder — we render all 4 and use z-index for stacking
 
   return (
     <section className="min-h-[90vh] bg-background relative overflow-hidden">
