@@ -7,8 +7,8 @@ import { trackEvent } from '@/hooks/useTrackEvent';
 import { Loader2, Clock, Shield, ArrowRight, Copy, Check } from 'lucide-react';
 
 const getLaunchDate = (): Date => {
-  // Fixed launch date: March 1, 2026 at midnight IST (UTC+5:30)
-  return new Date('2026-03-01T00:00:00+05:30');
+  // Fixed launch date: April 1, 2026 at midnight IST (UTC+5:30)
+  return new Date('2026-04-01T00:00:00+05:30');
 };
 
 const jewelryTypes = ['Gold 💛', 'Diamond 💎', 'Silver ⚪', 'Imitation 💍', 'All of the above'];
