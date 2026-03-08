@@ -115,7 +115,7 @@ const CardStack = ({ positions, cardW, cardH, containerW, containerH }: {
 
 const HeroSection = () => {
   return (
-    <section className="min-h-[90vh] bg-background relative overflow-hidden">
+    <section className="min-h-[90vh] bg-background relative overflow-x-clip">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 lg:px-[60px] flex flex-col lg:flex-row items-center py-16 lg:py-0 min-h-[90vh]">
         {/* Left 55% */}
         <div className="w-full lg:w-[55%] flex flex-col justify-center py-12">
