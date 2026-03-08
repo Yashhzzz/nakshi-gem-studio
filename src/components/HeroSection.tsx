@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import heroNecklaceFlat from '@/assets/hero-necklace-flat.jpg';
-import heroNecklaceModel from '@/assets/hero-necklace-model.jpg';
-import heroRingModel from '@/assets/hero-ring-model.jpg';
+import heroCardRing from '@/assets/hero-card-ring.jpg';
+import heroCardNecklace from '@/assets/hero-card-necklace.jpg';
+import heroCardBangles from '@/assets/hero-card-bangles.jpg';
+import heroCardEarrings from '@/assets/hero-card-earrings.jpg';
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 32 },
@@ -9,7 +11,42 @@ const fadeUp = (delay: number) => ({
   transition: { duration: 0.7, ease: 'easeOut' as const, delay },
 });
 
+const cardData = [
+  { src: heroCardRing, alt: 'Diamond ring on model hand', label: '60 Seconds' },
+  { src: heroCardNecklace, alt: 'Gold kundan necklace on model', label: 'AI Model Shot' },
+  { src: heroCardBangles, alt: 'Gold bangles on wrist', label: 'Gemstone Swap' },
+  { src: heroCardEarrings, alt: 'Diamond earrings', label: 'Batch Ready' },
+];
+
+const peekOffsets = [
+  { y: 0, x: 0, scale: 1, overlay: 0 },
+  { y: 12, x: 8, scale: 0.96, overlay: 0.08 },
+  { y: 22, x: 16, scale: 0.92, overlay: 0.16 },
+  { y: 32, x: 24, scale: 0.88, overlay: 0.24 },
+];
+
+const peekOffsetsMobile = [
+  { y: 0, x: 0, scale: 1, overlay: 0 },
+  { y: 8, x: 6, scale: 0.96, overlay: 0.08 },
+  { y: 15, x: 12, scale: 0.92, overlay: 0.16 },
+  { y: 22, x: 18, scale: 0.88, overlay: 0.24 },
+];
+
 const HeroSection = () => {
+  const [order, setOrder] = useState([0, 1, 2, 3]);
+  const [showHint, setShowHint] = useState(true);
+
+  const dismissTop = () => {
+    setShowHint(false);
+    setOrder(prev => {
+      const [first, ...rest] = prev;
+      return [...rest, first];
+    });
+  };
+
+  // Render in reverse so top card (order[0]) renders last (highest in DOM)
+  const renderOrder = [...order].reverse();
+
   return (
     <section className="min-h-[90vh] bg-background relative overflow-hidden">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 lg:px-[60px] flex flex-col lg:flex-row items-center py-16 lg:py-0 min-h-[90vh]">
@@ -49,67 +86,140 @@ const HeroSection = () => {
           </motion.p>
         </div>
 
-        {/* Right 45% — overlapping cards */}
+        {/* Right 45% — Card Stack */}
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
           className="w-full lg:w-[45%] flex justify-center items-center relative mt-12 lg:mt-0"
         >
-          <div className="relative" style={{ width: 380, height: 440 }}>
-            {/* Card 1 — Back (hidden on mobile) */}
-            <div
-              className="absolute overflow-hidden hidden md:block"
-              style={{
-                width: 280, height: 380, borderRadius: 4,
-                transform: 'rotate(-3deg)',
-                top: 40, left: 0, zIndex: 1,
-                boxShadow: '0 24px 60px rgba(41,28,14,0.15)',
-              }}
-            >
-              <img src={heroNecklaceFlat} alt="Gold necklace flat lay on marble" className="w-full h-full object-cover" loading="lazy" />
-              <span className="absolute bottom-3 left-3 font-body text-[11px] text-muted-foreground bg-background/80 px-2 py-1" style={{ borderRadius: 2 }}>
-                Original Photo
-              </span>
-            </div>
+          {/* Desktop stack */}
+          <div className="relative hidden md:block" style={{ width: 344, height: 452 + 32 }}>
+            {renderOrder.map((cardIndex, renderIdx) => {
+              const positionInStack = order.indexOf(cardIndex);
+              const offset = peekOffsets[positionInStack];
+              const isTop = positionInStack === 0;
 
-            {/* Card 2 — Middle (hidden on mobile) */}
-            <div
-              className="absolute overflow-hidden hidden md:block"
-              style={{
-                width: 280, height: 380, borderRadius: 4,
-                transform: 'rotate(1deg)',
-                top: 20, left: 16, zIndex: 2,
-                boxShadow: '0 24px 60px rgba(41,28,14,0.15)',
-              }}
-            >
-              <img src={heroNecklaceModel} alt="Same necklace on professional model" className="w-full h-full object-cover" loading="lazy" />
-              <span className="absolute bottom-3 left-3 font-body text-[11px] text-muted-foreground bg-background/80 px-2 py-1" style={{ borderRadius: 2 }}>
-                AI Model Shot
-              </span>
-            </div>
+              return (
+                <div
+                  key={cardIndex}
+                  onClick={isTop ? dismissTop : undefined}
+                  className="absolute overflow-hidden"
+                  style={{
+                    width: 320,
+                    height: 420,
+                    borderRadius: 8,
+                    top: offset.y,
+                    left: offset.x,
+                    transform: `scale(${offset.scale})`,
+                    transformOrigin: 'top left',
+                    zIndex: 4 - positionInStack,
+                    cursor: isTop ? 'pointer' : 'default',
+                    pointerEvents: isTop ? 'auto' : 'none',
+                    boxShadow: '0 24px 60px rgba(41,28,14,0.18)',
+                  }}
+                >
+                  <img
+                    src={cardData[cardIndex].src}
+                    alt={cardData[cardIndex].alt}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    draggable={false}
+                  />
+                  {/* Dark overlay for depth */}
+                  {offset.overlay > 0 && (
+                    <div className="absolute inset-0" style={{ background: `rgba(41,28,14,${offset.overlay})` }} />
+                  )}
+                  {/* Label pill */}
+                  <span
+                    className="absolute bottom-4 left-4 font-body text-[12px] font-medium"
+                    style={{
+                      background: 'rgba(250,249,246,0.92)',
+                      backdropFilter: 'blur(8px)',
+                      borderRadius: 4,
+                      padding: '6px 14px',
+                      color: '#291C0E',
+                    }}
+                  >
+                    {cardData[cardIndex].label}
+                  </span>
+                  {/* Tap hint on top card */}
+                  {isTop && showHint && (
+                    <span
+                      className="absolute bottom-4 right-4 font-body text-[11px]"
+                      style={{ color: '#A78D78' }}
+                    >
+                      Tap to see more →
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
 
-            {/* Card 3 — Front (always visible) */}
-            <div
-              className="absolute overflow-hidden md:left-[32px] left-[50px]"
-              style={{
-                width: 280, height: 380, borderRadius: 4,
-                top: 0, zIndex: 3,
-                boxShadow: '0 24px 60px rgba(41,28,14,0.15)',
-              }}
-            >
-              <img src={heroRingModel} alt="Diamond ring on model finger" className="w-full h-full object-cover" loading="lazy" />
-              <span className="absolute bottom-3 left-3 font-body text-[11px] text-muted-foreground bg-background/80 px-2 py-1" style={{ borderRadius: 2 }}>
-                60 Seconds
-              </span>
-            </div>
+          {/* Mobile stack */}
+          <div className="relative md:hidden" style={{ width: 284, height: 362 + 22 }}>
+            {renderOrder.map((cardIndex) => {
+              const positionInStack = order.indexOf(cardIndex);
+              const offset = peekOffsetsMobile[positionInStack];
+              const isTop = positionInStack === 0;
+
+              return (
+                <div
+                  key={cardIndex}
+                  onClick={isTop ? dismissTop : undefined}
+                  className="absolute overflow-hidden"
+                  style={{
+                    width: 260,
+                    height: 340,
+                    borderRadius: 8,
+                    top: offset.y,
+                    left: offset.x,
+                    transform: `scale(${offset.scale})`,
+                    transformOrigin: 'top left',
+                    zIndex: 4 - positionInStack,
+                    cursor: isTop ? 'pointer' : 'default',
+                    pointerEvents: isTop ? 'auto' : 'none',
+                    boxShadow: '0 24px 60px rgba(41,28,14,0.18)',
+                  }}
+                >
+                  <img
+                    src={cardData[cardIndex].src}
+                    alt={cardData[cardIndex].alt}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    draggable={false}
+                  />
+                  {offset.overlay > 0 && (
+                    <div className="absolute inset-0" style={{ background: `rgba(41,28,14,${offset.overlay})` }} />
+                  )}
+                  <span
+                    className="absolute bottom-4 left-4 font-body text-[12px] font-medium"
+                    style={{
+                      background: 'rgba(250,249,246,0.92)',
+                      backdropFilter: 'blur(8px)',
+                      borderRadius: 4,
+                      padding: '6px 14px',
+                      color: '#291C0E',
+                    }}
+                  >
+                    {cardData[cardIndex].label}
+                  </span>
+                  {isTop && showHint && (
+                    <span className="absolute bottom-4 right-4 font-body text-[11px]" style={{ color: '#A78D78' }}>
+                      Tap to see more →
+                    </span>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </motion.div>
       </div>
 
-      {/* Decorative rotating star */}
+      {/* Decorative rotating star — behind card stack */}
       <div
-        className="absolute top-20 right-10 pointer-events-none"
+        className="absolute top-20 right-10 pointer-events-none z-0"
         style={{ animation: 'star-spin 60s linear infinite', opacity: 0.2 }}
       >
         <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
