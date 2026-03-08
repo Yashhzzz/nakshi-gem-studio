@@ -1,65 +1,97 @@
 import { motion } from 'framer-motion';
 
-const competitors = [
-  {
-    label: 'Studio Shoot',
-    cost: '₹15,000–50,000',
-    costSub: 'per session',
-    time: '2–5 days',
-    features: [false, false, false, false, false],
-  },
-  {
-    label: 'Freelancer',
-    cost: '₹30–80',
-    costSub: 'per image',
-    time: '1–3 days',
-    features: [false, 'extra', 'extra', false, false],
-  },
-];
-
-const nakshi = {
-  cost: '₹699',
-  costSub: '/month',
-  time: '60s',
-  features: [true, true, true, true, true],
-};
-
-const featureLabels = [
-  'Works on WhatsApp',
-  'Gemstone color swap',
-  'Batch 10 images',
-  'Available at midnight',
-  'No coordination needed',
-];
-
-const GoldBadge = ({ delay }: { delay: number }) => (
+const GoldCheck = ({ delay }: { delay: number }) => (
   <motion.span
     initial={{ scale: 0 }}
     whileInView={{ scale: 1 }}
     transition={{ type: 'spring', stiffness: 300, damping: 20, delay }}
     viewport={{ once: true }}
-    className="inline-flex items-center justify-center w-6 h-6 text-[12px] font-bold"
+    className="inline-flex items-center justify-center w-7 h-7 font-bold text-[14px]"
     style={{
       background: '#B8860B',
       borderRadius: '50%',
       color: '#FFF2DF',
-      boxShadow: '0 0 16px rgba(184,134,11,0.35)',
+      boxShadow: '0 0 12px rgba(184,134,11,0.40)',
     }}
   >
     ✓
   </motion.span>
 );
 
+const Dash = () => (
+  <span className="text-[20px]" style={{ color: '#4A3728' }}>—</span>
+);
+
+const ExtraCost = () => (
+  <span className="font-body text-[13px] italic" style={{ color: '#6E473B' }}>Extra cost</span>
+);
+
+const rows = [
+  {
+    feature: 'Cost',
+    studio: (
+      <span className="flex flex-col items-center">
+        <span className="font-body text-[14px]" style={{ color: '#A78D78' }}>₹15,000–50,000</span>
+        <span className="font-body text-[11px]" style={{ color: '#6E473B' }}>/session</span>
+      </span>
+    ),
+    freelancer: (
+      <span className="flex flex-col items-center">
+        <span className="font-body text-[14px]" style={{ color: '#A78D78' }}>₹30–80</span>
+        <span className="font-body text-[11px]" style={{ color: '#6E473B' }}>/image</span>
+      </span>
+    ),
+    nakshi: (i: number) => (
+      <span className="flex flex-col items-center">
+        <span className="font-heading text-[22px] font-semibold" style={{ color: '#B8860B' }}>₹699–3,999</span>
+        <span className="font-body text-[11px]" style={{ color: '#D3A376' }}>/month</span>
+      </span>
+    ),
+  },
+  {
+    feature: 'Turnaround',
+    studio: <span className="font-body text-[14px]" style={{ color: '#A78D78' }}>2–5 days</span>,
+    freelancer: <span className="font-body text-[14px]" style={{ color: '#A78D78' }}>1–3 days</span>,
+    nakshi: (i: number) => (
+      <span className="font-heading text-[26px] font-semibold" style={{ color: '#B8860B' }}>⚡ 60 seconds</span>
+    ),
+  },
+  {
+    feature: 'Works on WhatsApp',
+    studio: <Dash />,
+    freelancer: <Dash />,
+    nakshi: (i: number) => <GoldCheck delay={i * 0.06 + 0.2} />,
+  },
+  {
+    feature: 'Gemstone color swap',
+    studio: <Dash />,
+    freelancer: <ExtraCost />,
+    nakshi: (i: number) => <GoldCheck delay={i * 0.06 + 0.2} />,
+  },
+  {
+    feature: 'Batch 10 images',
+    studio: <Dash />,
+    freelancer: <ExtraCost />,
+    nakshi: (i: number) => <GoldCheck delay={i * 0.06 + 0.2} />,
+  },
+  {
+    feature: 'Available at midnight',
+    studio: <Dash />,
+    freelancer: <Dash />,
+    nakshi: (i: number) => <GoldCheck delay={i * 0.06 + 0.2} />,
+  },
+  {
+    feature: 'No coordination needed',
+    studio: <Dash />,
+    freelancer: <Dash />,
+    nakshi: (i: number) => <GoldCheck delay={i * 0.06 + 0.2} />,
+  },
+];
+
 const ComparisonTable = () => {
   return (
-    <section className="py-[80px] md:py-[120px] relative overflow-hidden" style={{ background: '#291C0E' }}>
-      {/* Subtle radial glow behind Nakshi card */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/4 w-[600px] h-[600px] pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(184,134,11,0.06) 0%, transparent 70%)' }}
-      />
-
-      <div className="max-w-[1100px] mx-auto px-6 md:px-10 lg:px-[60px] relative z-[1]">
+    <section className="py-[80px] md:py-[120px]" style={{ background: '#291C0E' }}>
+      <div className="max-w-[1000px] mx-auto px-6 md:px-10 lg:px-[60px]">
         <motion.p
           initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -75,165 +107,133 @@ const ComparisonTable = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
           viewport={{ once: true, margin: '-60px' }}
-          className="font-heading text-[clamp(36px,5vw,56px)] font-medium text-center mb-20"
+          className="font-heading text-[clamp(40px,5vw,64px)] font-medium text-center mb-16"
           style={{ color: '#FFF2DF' }}
         >
           Nakshi AI vs Everything Else
         </motion.h2>
 
-        {/* 3 Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
-          {/* Competitor cards */}
-          {competitors.map((comp, ci) => (
-            <motion.div
-              key={ci}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: ci * 0.1 }}
-              viewport={{ once: true, margin: '-60px' }}
-              className="p-8"
+        {/* Table wrapper */}
+        <div className="relative">
+          {/* Mobile scroll fade */}
+          <div
+            className="md:hidden absolute right-0 top-0 bottom-0 w-10 z-10 pointer-events-none"
+            style={{ background: 'linear-gradient(to left, #291C0E, transparent)' }}
+          />
+
+          <div className="overflow-x-auto">
+            <table
+              className="w-full"
               style={{
-                background: '#1E1410',
+                minWidth: 600,
                 border: '1px solid #3E2522',
                 borderRadius: 8,
+                borderCollapse: 'separate',
+                borderSpacing: 0,
+                overflow: 'hidden',
               }}
             >
-              <p
-                className="font-body text-[11px] uppercase tracking-[0.2em] mb-8"
-                style={{ color: '#6E473B' }}
-              >
-                {comp.label}
-              </p>
-
-              {/* Cost */}
-              <div className="mb-6">
-                <span className="font-heading text-[36px] font-light" style={{ color: '#A78D78' }}>
-                  {comp.cost}
-                </span>
-                <span className="font-body text-[12px] ml-1" style={{ color: '#6E473B' }}>
-                  {comp.costSub}
-                </span>
-              </div>
-
-              {/* Time */}
-              <div className="mb-8 pb-8" style={{ borderBottom: '1px solid #3E2522' }}>
-                <p className="font-body text-[11px] uppercase tracking-wider mb-1" style={{ color: '#6E473B' }}>
-                  Turnaround
-                </p>
-                <span className="font-heading text-[22px] font-light" style={{ color: '#A78D78' }}>
-                  {comp.time}
-                </span>
-              </div>
-
-              {/* Features */}
-              <ul className="space-y-4">
-                {featureLabels.map((label, fi) => {
-                  const val = comp.features[fi];
+              <thead>
+                <tr style={{ background: '#3E2522', height: 56 }}>
+                  <th
+                    className="font-body text-[12px] uppercase tracking-[0.2em] text-left pl-8 sticky left-0 z-[2]"
+                    style={{ color: '#A78D78', background: '#3E2522' }}
+                  >
+                    Feature
+                  </th>
+                  <th className="font-body text-[12px] uppercase tracking-[0.2em] text-center px-4" style={{ color: '#A78D78' }}>
+                    Studio Shoot
+                  </th>
+                  <th className="font-body text-[12px] uppercase tracking-[0.2em] text-center px-4" style={{ color: '#A78D78' }}>
+                    Freelancer
+                  </th>
+                  <th
+                    className="font-body text-[13px] uppercase tracking-[0.2em] text-center px-4 font-bold relative"
+                    style={{ color: '#291C0E', background: '#B8860B' }}
+                  >
+                    Nakshi AI
+                    <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 text-[10px]" style={{ color: '#291C0E' }}>▼</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row, i) => {
+                  const isLast = i === rows.length - 1;
                   return (
-                    <li key={fi} className="flex items-center gap-3">
-                      {val === 'extra' ? (
-                        <span className="font-body text-[11px] italic px-2 py-0.5" style={{ color: '#6E473B', background: '#291C0E', borderRadius: 2 }}>
-                          Extra $
-                        </span>
-                      ) : (
-                        <span className="text-[16px]" style={{ color: '#3E2522' }}>—</span>
-                      )}
-                      <span className="font-body text-[13px]" style={{ color: val ? '#A78D78' : '#4A3728' }}>
-                        {label}
-                      </span>
-                    </li>
+                    <motion.tr
+                      key={i}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.4, ease: 'easeOut', delay: i * 0.06 }}
+                      viewport={{ once: true, margin: '-40px' }}
+                      className="transition-colors duration-150"
+                      style={{
+                        height: 64,
+                        borderBottom: isLast ? 'none' : '1px solid rgba(255,255,255,0.05)',
+                      }}
+                      onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+                    >
+                      <td
+                        className="font-body text-[15px] pl-8 pr-4 sticky left-0 z-[2]"
+                        style={{ color: 'rgba(255,242,223,0.8)', background: '#291C0E' }}
+                      >
+                        {row.feature}
+                      </td>
+                      <td className="text-center px-4">{row.studio}</td>
+                      <td className="text-center px-4">{row.freelancer}</td>
+                      <td
+                        className="text-center px-4"
+                        style={{
+                          background: 'rgba(184,134,11,0.10)',
+                          borderLeft: '2px solid #B8860B',
+                          borderRight: '2px solid #B8860B',
+                          ...(isLast ? {
+                            borderBottom: '2px solid #B8860B',
+                            borderBottomRightRadius: 8,
+                          } : {}),
+                        }}
+                      >
+                        {row.nakshi(i)}
+                      </td>
+                    </motion.tr>
                   );
                 })}
-              </ul>
-            </motion.div>
-          ))}
-
-          {/* Nakshi AI Card — the hero */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true, margin: '-60px' }}
-            className="relative p-8 md:-mt-4 md:mb-[-16px]"
-            style={{
-              background: 'linear-gradient(180deg, #2A1E0E 0%, #1C1408 100%)',
-              border: '2px solid #B8860B',
-              borderRadius: 8,
-              boxShadow: '0 0 40px rgba(184,134,11,0.12), 0 24px 48px rgba(0,0,0,0.3)',
-            }}
-          >
-            {/* Winner badge */}
-            <span
-              className="absolute -top-3 left-1/2 -translate-x-1/2 font-body text-[10px] font-bold uppercase tracking-wider px-4 py-1"
-              style={{ background: '#B8860B', color: '#291C0E', borderRadius: 100 }}
-            >
-              ★ Clear Winner
-            </span>
-
-            <p
-              className="font-body text-[11px] uppercase tracking-[0.2em] mb-8 mt-2"
-              style={{ color: '#B8860B' }}
-            >
-              Nakshi AI
-            </p>
-
-            {/* Cost */}
-            <div className="mb-6">
-              <span className="font-heading text-[44px] font-semibold" style={{ color: '#B8860B' }}>
-                {nakshi.cost}
-              </span>
-              <span className="font-body text-[13px] ml-1" style={{ color: '#D3A376' }}>
-                {nakshi.costSub}
-              </span>
-            </div>
-
-            {/* Time */}
-            <div className="mb-8 pb-8" style={{ borderBottom: '1px solid rgba(184,134,11,0.25)' }}>
-              <p className="font-body text-[11px] uppercase tracking-wider mb-1" style={{ color: '#D3A376' }}>
-                Turnaround
-              </p>
-              <span className="font-heading text-[28px] font-semibold" style={{ color: '#D3A376' }}>
-                ⚡ {nakshi.time}
-              </span>
-            </div>
-
-            {/* Features */}
-            <ul className="space-y-4">
-              {featureLabels.map((label, fi) => (
-                <li key={fi} className="flex items-center gap-3">
-                  <GoldBadge delay={fi * 0.06 + 0.4} />
-                  <span className="font-body text-[13px]" style={{ color: '#FFF2DF' }}>
-                    {label}
-                  </span>
-                </li>
-              ))}
-            </ul>
-
-            {/* CTA */}
-            <a
-              href="#waitlist"
-              className="block w-full text-center font-body text-[14px] font-semibold mt-8 py-3 hover:opacity-90 transition-opacity"
-              style={{ background: '#B8860B', color: '#291C0E', borderRadius: 2 }}
-            >
-              Join Waitlist →
-            </a>
-          </motion.div>
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        {/* Bottom callout */}
+        {/* Winner callout */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mt-16"
+          className="flex justify-center mt-12"
         >
-          <p className="font-body text-[14px] line-through mb-1" style={{ color: '#6E473B' }}>
-            Studio shoots cost ₹15,000 and take 5 days.
-          </p>
-          <p className="font-body text-[17px] font-medium" style={{ color: '#D3A376' }}>
-            Nakshi AI costs ₹699 and takes 60 seconds.
-          </p>
+          <div
+            className="text-center px-10 py-6"
+            style={{
+              background: 'rgba(184,134,11,0.08)',
+              border: '1px solid rgba(184,134,11,0.25)',
+              borderRadius: 4,
+            }}
+          >
+            <p className="font-body text-[14px] line-through mb-1" style={{ color: '#A78D78' }}>
+              Studio shoots cost ₹15,000 and take 5 days.
+            </p>
+            <p className="font-body text-[16px] font-medium mb-2" style={{ color: '#D3A376' }}>
+              Nakshi AI costs ₹699 and takes 60 seconds.
+            </p>
+            <a
+              href="#waitlist"
+              className="font-body text-[14px] hover:underline transition-colors"
+              style={{ color: '#B8860B' }}
+            >
+              Try it free — 20 images, no card required →
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>
