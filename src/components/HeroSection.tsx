@@ -35,6 +35,7 @@ const mobilePos = [
 const CardStack = ({ positions, cardW, cardH, containerW, containerH }: {
   positions: typeof desktopPos; cardW: number; cardH: number; containerW: number; containerH: number;
 }) => {
+  // order[0] = top card index, order[3] = bottom card index
   const [order, setOrder] = useState([0, 1, 2, 3]);
 
   useEffect(() => {
@@ -47,10 +48,18 @@ const CardStack = ({ positions, cardW, cardH, containerW, containerH }: {
     return () => clearInterval(interval);
   }, []);
 
+  // For each card (0-3), find its position in the order array
+  // This determines which visual slot it occupies
+  const getPosition = (cardIndex: number) => {
+    const slot = order.indexOf(cardIndex);
+    return positions[slot];
+  };
+
   return (
     <div className="relative flex-shrink-0" style={{ width: containerW, height: containerH }}>
-      {order.map((cardIndex, posIdx) => {
-        const pos = positions[posIdx];
+      {/* Always render cards 0,1,2,3 in fixed DOM order — only styles change */}
+      {[0, 1, 2, 3].map((cardIndex) => {
+        const pos = getPosition(cardIndex);
         return (
           <div
             key={cardIndex}
@@ -68,11 +77,33 @@ const CardStack = ({ positions, cardW, cardH, containerW, containerH }: {
               boxShadow: pos.shadow,
             }}
           >
-            <img src={cardData[cardIndex].src} alt={cardData[cardIndex].alt} className="w-full h-full object-cover" loading="lazy" draggable={false} />
-            {pos.overlay > 0 && (
-              <div className="absolute inset-0 pointer-events-none" style={{ borderRadius: 12, background: `rgba(41,28,14,${pos.overlay})`, zIndex: 2 }} />
-            )}
-            <span className="absolute bottom-4 left-4 font-body text-[12px] font-medium" style={{ background: 'rgba(250,249,246,0.92)', backdropFilter: 'blur(8px)', borderRadius: 4, padding: '6px 14px', color: '#291C0E', zIndex: 3 }}>
+            <img
+              src={cardData[cardIndex].src}
+              alt={cardData[cardIndex].alt}
+              className="w-full h-full object-cover"
+              draggable={false}
+            />
+            {/* Dark overlay for depth on non-top cards */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                borderRadius: 12,
+                background: pos.overlay > 0 ? `rgba(41,28,14,${pos.overlay})` : 'transparent',
+                zIndex: 2,
+              }}
+            />
+            {/* Label pill */}
+            <span
+              className="absolute bottom-4 left-4 font-body text-[12px] font-medium"
+              style={{
+                background: 'rgba(250,249,246,0.92)',
+                backdropFilter: 'blur(8px)',
+                borderRadius: 4,
+                padding: '6px 14px',
+                color: '#291C0E',
+                zIndex: 3,
+              }}
+            >
               {cardData[cardIndex].label}
             </span>
           </div>
@@ -130,17 +161,17 @@ const HeroSection = () => {
           className="w-full lg:w-[45%] flex justify-center items-center relative mt-12 lg:mt-0"
         >
           {/* Desktop */}
-          <div className="hidden md:block">
-            <CardStack positions={desktopPos} cardW={300} cardH={400} containerW={340} containerH={560} />
+          <div className="hidden md:flex justify-center">
+            <CardStack positions={desktopPos} cardW={300} cardH={400} containerW={340} containerH={460} />
           </div>
           {/* Mobile */}
-          <div className="md:hidden">
-            <CardStack positions={mobilePos} cardW={248} cardH={340} containerW={280} containerH={480} />
+          <div className="flex md:hidden justify-center">
+            <CardStack positions={mobilePos} cardW={248} cardH={340} containerW={280} containerH={390} />
           </div>
         </motion.div>
       </div>
 
-      {/* Decorative rotating star — behind card stack */}
+      {/* Decorative rotating star */}
       <div
         className="absolute top-20 right-10 pointer-events-none z-0"
         style={{ animation: 'star-spin 60s linear infinite', opacity: 0.2 }}
