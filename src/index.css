@@ -113,3 +113,19 @@
 .footer-social-icon:hover svg {
   fill: #D3A376;
 }
+
+/* Hide scrollbar for horizontal scroll cards */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Mobile tap highlight removal */
+@media (max-width: 767px) {
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
