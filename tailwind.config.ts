@@ -56,6 +56,8 @@ export default {
           dark: "hsl(var(--nakshi-dark))",
           darkest: "hsl(var(--nakshi-darkest))",
           "gold-light": "hsl(var(--nakshi-gold-light))",
+          "gold-glow": "hsl(var(--nakshi-gold-glow))",
+          cream: "hsl(var(--nakshi-cream))",
           "text-body": "hsl(var(--nakshi-text-body))",
           "text-on-dark": "hsl(var(--nakshi-text-on-dark))",
           whatsapp: "hsl(var(--nakshi-whatsapp))",
