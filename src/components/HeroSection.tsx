@@ -20,16 +20,16 @@ const cardData = [
 
 const desktopPos = [
   { x: 0, y: 0, scale: 1, zIndex: 40, overlay: 0, shadow: '0 32px 80px rgba(41,28,14,0.22)' },
-  { x: 12, y: 14, scale: 0.96, zIndex: 30, overlay: 0.10, shadow: '0 24px 60px rgba(41,28,14,0.16)' },
-  { x: 22, y: 26, scale: 0.92, zIndex: 20, overlay: 0.20, shadow: '0 16px 40px rgba(41,28,14,0.10)' },
-  { x: 32, y: 38, scale: 0.88, zIndex: 10, overlay: 0.30, shadow: '0 8px 24px rgba(41,28,14,0.06)' },
+  { x: 20, y: 20, scale: 0.96, zIndex: 30, overlay: 0.10, shadow: '0 24px 60px rgba(41,28,14,0.16)' },
+  { x: 38, y: 38, scale: 0.92, zIndex: 20, overlay: 0.20, shadow: '0 16px 40px rgba(41,28,14,0.10)' },
+  { x: 54, y: 54, scale: 0.88, zIndex: 10, overlay: 0.30, shadow: '0 8px 24px rgba(41,28,14,0.06)' },
 ];
 
 const mobilePos = [
   { x: 0, y: 0, scale: 1, zIndex: 40, overlay: 0, shadow: '0 32px 80px rgba(41,28,14,0.22)' },
-  { x: 8, y: 10, scale: 0.96, zIndex: 30, overlay: 0.10, shadow: '0 24px 60px rgba(41,28,14,0.16)' },
-  { x: 14, y: 18, scale: 0.92, zIndex: 20, overlay: 0.20, shadow: '0 16px 40px rgba(41,28,14,0.10)' },
-  { x: 20, y: 26, scale: 0.88, zIndex: 10, overlay: 0.30, shadow: '0 8px 24px rgba(41,28,14,0.06)' },
+  { x: 14, y: 14, scale: 0.96, zIndex: 30, overlay: 0.10, shadow: '0 24px 60px rgba(41,28,14,0.16)' },
+  { x: 26, y: 26, scale: 0.92, zIndex: 20, overlay: 0.20, shadow: '0 16px 40px rgba(41,28,14,0.10)' },
+  { x: 38, y: 38, scale: 0.88, zIndex: 10, overlay: 0.30, shadow: '0 8px 24px rgba(41,28,14,0.06)' },
 ];
 
 const CardStack = ({ positions, cardW, cardH, containerW, containerH }: {
