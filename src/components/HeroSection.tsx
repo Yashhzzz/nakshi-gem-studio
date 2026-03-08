@@ -34,17 +34,17 @@ const peekOffsetsMobile = [
 
 const HeroSection = () => {
   const [order, setOrder] = useState([0, 1, 2, 3]);
-  const [showHint, setShowHint] = useState(true);
 
-  const dismissTop = () => {
-    setShowHint(false);
-    setOrder(prev => {
-      const [first, ...rest] = prev;
-      return [...rest, first];
-    });
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setOrder(prev => {
+        const [first, ...rest] = prev;
+        return [...rest, first];
+      });
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
 
-  // Render in reverse so top card (order[0]) renders last (highest in DOM)
   const renderOrder = [...order].reverse();
 
   return (
