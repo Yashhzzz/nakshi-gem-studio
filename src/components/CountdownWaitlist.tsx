@@ -7,11 +7,8 @@ import { trackEvent } from '@/hooks/useTrackEvent';
 import { Loader2, Clock, Shield, ArrowRight, Copy, Check } from 'lucide-react';
 
 const getLaunchDate = (): Date => {
-  const stored = localStorage.getItem('nakshi_launch_date');
-  if (stored) return new Date(stored);
-  const d = new Date(Date.now() + 15 * 24 * 60 * 60 * 1000);
-  localStorage.setItem('nakshi_launch_date', d.toISOString());
-  return d;
+  // Fixed launch date: March 1, 2026 at midnight IST (UTC+5:30)
+  return new Date('2026-03-01T00:00:00+05:30');
 };
 
 const jewelryTypes = ['Gold 💛', 'Diamond 💎', 'Silver ⚪', 'Imitation 💍', 'All of the above'];
