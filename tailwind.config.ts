@@ -13,6 +13,11 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        heading: ['"Cormorant Garamond"', 'serif'],
+        body: ['"DM Sans"', 'sans-serif'],
+        hindi: ['"Noto Serif Devanagari"', 'serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -47,6 +52,16 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        nakshi: {
+          dark: "hsl(var(--nakshi-dark))",
+          darkest: "hsl(var(--nakshi-darkest))",
+          "gold-light": "hsl(var(--nakshi-gold-light))",
+          "text-body": "hsl(var(--nakshi-text-body))",
+          "text-on-dark": "hsl(var(--nakshi-text-on-dark))",
+          whatsapp: "hsl(var(--nakshi-whatsapp))",
+          success: "hsl(var(--nakshi-success))",
+          placeholder: "hsl(var(--nakshi-placeholder))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -65,20 +80,12 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {
