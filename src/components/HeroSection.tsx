@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import heroCardRing from '@/assets/hero-card-ring.jpg';
 import heroCardNecklace from '@/assets/hero-card-necklace.jpg';
@@ -34,17 +34,17 @@ const peekOffsetsMobile = [
 
 const HeroSection = () => {
   const [order, setOrder] = useState([0, 1, 2, 3]);
-  const [showHint, setShowHint] = useState(true);
 
-  const dismissTop = () => {
-    setShowHint(false);
-    setOrder(prev => {
-      const [first, ...rest] = prev;
-      return [...rest, first];
-    });
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setOrder(prev => {
+        const [first, ...rest] = prev;
+        return [...rest, first];
+      });
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
 
-  // Render in reverse so top card (order[0]) renders last (highest in DOM)
   const renderOrder = [...order].reverse();
 
   return (
@@ -95,63 +95,31 @@ const HeroSection = () => {
         >
           {/* Desktop stack */}
           <div className="relative hidden md:block" style={{ width: 344, height: 452 + 32 }}>
-            {renderOrder.map((cardIndex, renderIdx) => {
+            {renderOrder.map((cardIndex) => {
               const positionInStack = order.indexOf(cardIndex);
               const offset = peekOffsets[positionInStack];
-              const isTop = positionInStack === 0;
 
               return (
                 <div
                   key={cardIndex}
-                  onClick={isTop ? dismissTop : undefined}
                   className="absolute overflow-hidden"
                   style={{
-                    width: 320,
-                    height: 420,
-                    borderRadius: 8,
-                    top: offset.y,
-                    left: offset.x,
+                    width: 320, height: 420, borderRadius: 8,
+                    top: offset.y, left: offset.x,
                     transform: `scale(${offset.scale})`,
                     transformOrigin: 'top left',
                     zIndex: 4 - positionInStack,
-                    cursor: isTop ? 'pointer' : 'default',
-                    pointerEvents: isTop ? 'auto' : 'none',
+                    pointerEvents: 'none',
                     boxShadow: '0 24px 60px rgba(41,28,14,0.18)',
                   }}
                 >
-                  <img
-                    src={cardData[cardIndex].src}
-                    alt={cardData[cardIndex].alt}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    draggable={false}
-                  />
-                  {/* Dark overlay for depth */}
+                  <img src={cardData[cardIndex].src} alt={cardData[cardIndex].alt} className="w-full h-full object-cover" loading="lazy" draggable={false} />
                   {offset.overlay > 0 && (
                     <div className="absolute inset-0" style={{ background: `rgba(41,28,14,${offset.overlay})` }} />
                   )}
-                  {/* Label pill */}
-                  <span
-                    className="absolute bottom-4 left-4 font-body text-[12px] font-medium"
-                    style={{
-                      background: 'rgba(250,249,246,0.92)',
-                      backdropFilter: 'blur(8px)',
-                      borderRadius: 4,
-                      padding: '6px 14px',
-                      color: '#291C0E',
-                    }}
-                  >
+                  <span className="absolute bottom-4 left-4 font-body text-[12px] font-medium" style={{ background: 'rgba(250,249,246,0.92)', backdropFilter: 'blur(8px)', borderRadius: 4, padding: '6px 14px', color: '#291C0E' }}>
                     {cardData[cardIndex].label}
                   </span>
-                  {/* Tap hint on top card */}
-                  {isTop && showHint && (
-                    <span
-                      className="absolute bottom-4 right-4 font-body text-[11px]"
-                      style={{ color: '#A78D78' }}
-                    >
-                      Tap to see more →
-                    </span>
-                  )}
                 </div>
               );
             })}
@@ -162,54 +130,28 @@ const HeroSection = () => {
             {renderOrder.map((cardIndex) => {
               const positionInStack = order.indexOf(cardIndex);
               const offset = peekOffsetsMobile[positionInStack];
-              const isTop = positionInStack === 0;
 
               return (
                 <div
                   key={cardIndex}
-                  onClick={isTop ? dismissTop : undefined}
                   className="absolute overflow-hidden"
                   style={{
-                    width: 260,
-                    height: 340,
-                    borderRadius: 8,
-                    top: offset.y,
-                    left: offset.x,
+                    width: 260, height: 340, borderRadius: 8,
+                    top: offset.y, left: offset.x,
                     transform: `scale(${offset.scale})`,
                     transformOrigin: 'top left',
                     zIndex: 4 - positionInStack,
-                    cursor: isTop ? 'pointer' : 'default',
-                    pointerEvents: isTop ? 'auto' : 'none',
+                    pointerEvents: 'none',
                     boxShadow: '0 24px 60px rgba(41,28,14,0.18)',
                   }}
                 >
-                  <img
-                    src={cardData[cardIndex].src}
-                    alt={cardData[cardIndex].alt}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    draggable={false}
-                  />
+                  <img src={cardData[cardIndex].src} alt={cardData[cardIndex].alt} className="w-full h-full object-cover" loading="lazy" draggable={false} />
                   {offset.overlay > 0 && (
                     <div className="absolute inset-0" style={{ background: `rgba(41,28,14,${offset.overlay})` }} />
                   )}
-                  <span
-                    className="absolute bottom-4 left-4 font-body text-[12px] font-medium"
-                    style={{
-                      background: 'rgba(250,249,246,0.92)',
-                      backdropFilter: 'blur(8px)',
-                      borderRadius: 4,
-                      padding: '6px 14px',
-                      color: '#291C0E',
-                    }}
-                  >
+                  <span className="absolute bottom-4 left-4 font-body text-[12px] font-medium" style={{ background: 'rgba(250,249,246,0.92)', backdropFilter: 'blur(8px)', borderRadius: 4, padding: '6px 14px', color: '#291C0E' }}>
                     {cardData[cardIndex].label}
                   </span>
-                  {isTop && showHint && (
-                    <span className="absolute bottom-4 right-4 font-body text-[11px]" style={{ color: '#A78D78' }}>
-                      Tap to see more →
-                    </span>
-                  )}
                 </div>
               );
             })}
