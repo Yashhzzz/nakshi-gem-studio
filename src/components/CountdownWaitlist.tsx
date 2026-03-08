@@ -169,8 +169,11 @@ const CountdownWaitlist = () => {
       </section>
 
       {/* Waitlist Form */}
-      <section className="bg-secondary py-[60px] md:py-[100px]" id="waitlist">
-        <div className="max-w-[540px] mx-auto px-5 md:px-6">
+      <section className="relative py-[60px] md:py-[100px] overflow-hidden" id="waitlist" style={{ background: 'hsl(var(--secondary))' }}>
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)', backgroundSize: '32px 32px' }} />
+
+        <div className="max-w-[600px] mx-auto px-5 md:px-6 relative z-10">
           {submitted ? (
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center relative">
               <div className="absolute inset-x-0 top-0 h-0 overflow-visible pointer-events-none">
@@ -192,28 +195,28 @@ const CountdownWaitlist = () => {
               <h3 className="font-heading text-[28px] md:text-[40px] font-light text-foreground mb-2">You're on the list!</h3>
               <p className="font-body text-[13px] text-muted-foreground mb-8">Share your link and earn ₹250 for every signup</p>
 
-              <div className="p-6 md:p-8 mb-5" style={{ background: 'var(--gradient-editorial)', borderRadius: 8 }}>
+              <div className="p-6 md:p-8 mb-5" style={{ background: 'var(--gradient-editorial)', borderRadius: 12 }}>
                 <p className="font-body text-[10px] uppercase tracking-[0.2em] text-nakshi-text-on-dark/40 mb-3">Your referral code</p>
                 <p className="font-heading text-[32px] md:text-[40px] font-semibold text-gold-shine tracking-[0.08em] mb-5">{refCode}</p>
                 <div className="flex items-center gap-2">
-                  <div className="flex-1 min-w-0 px-4 py-3" style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 4, border: '1px solid rgba(255,255,255,0.08)' }}>
+                  <div className="flex-1 min-w-0 px-4 py-3" style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 6, border: '1px solid rgba(255,255,255,0.08)' }}>
                     <p className="font-mono text-[12px] md:text-[13px] text-nakshi-text-on-dark/70 truncate">{refLink.replace(/^https?:\/\//, '')}</p>
                   </div>
-                  <button onClick={copyLink} className="flex items-center gap-1.5 px-4 py-3 font-body text-[12px] font-semibold bg-primary text-primary-foreground whitespace-nowrap hover:brightness-110 active:scale-[0.98] transition-all" style={{ borderRadius: 4 }}>
+                  <button onClick={copyLink} className="flex items-center gap-1.5 px-4 py-3 font-body text-[12px] font-semibold bg-primary text-primary-foreground whitespace-nowrap hover:brightness-110 active:scale-[0.98] transition-all" style={{ borderRadius: 6 }}>
                     {copiedLink ? <><Check size={14} /> Copied</> : <><Copy size={14} /> Copy</>}
                   </button>
                 </div>
               </div>
 
               <div className="space-y-2.5">
-                <button onClick={whatsappShare} className="w-full flex items-center justify-center gap-2 font-body text-[13px] md:text-[14px] font-semibold py-3.5 active:scale-[0.98] transition-all" style={{ background: '#25D366', color: '#fff', borderRadius: 6 }}>
+                <button onClick={whatsappShare} className="w-full flex items-center justify-center gap-2 font-body text-[13px] md:text-[14px] font-semibold py-3.5 active:scale-[0.98] transition-all" style={{ background: '#25D366', color: '#fff', borderRadius: 8 }}>
                   Share on WhatsApp <ArrowRight size={14} />
                 </button>
-                <button onClick={copyMessage} className="w-full font-body text-[13px] md:text-[14px] font-medium py-3.5 border border-border text-foreground hover:bg-accent active:scale-[0.98] transition-all" style={{ borderRadius: 6 }}>
+                <button onClick={copyMessage} className="w-full font-body text-[13px] md:text-[14px] font-medium py-3.5 border border-border text-foreground hover:bg-accent active:scale-[0.98] transition-all" style={{ borderRadius: 8 }}>
                   {copiedMsg ? '✓ Message Copied' : 'Copy Share Message'}
                 </button>
                 <div className="relative">
-                  <button onClick={shareInstagram} className="w-full font-body text-[13px] md:text-[14px] font-semibold py-3.5 active:scale-[0.98] transition-all" style={{ background: 'linear-gradient(135deg, #833AB4, #E1306C, #F77737)', color: '#fff', borderRadius: 6 }}>
+                  <button onClick={shareInstagram} className="w-full font-body text-[13px] md:text-[14px] font-semibold py-3.5 active:scale-[0.98] transition-all" style={{ background: 'linear-gradient(135deg, #833AB4, #E1306C, #F77737)', color: '#fff', borderRadius: 8 }}>
                     Share on Instagram
                   </button>
                   {copiedInsta && <p className="font-body text-[11px] text-primary mt-2 text-center">Link copied! Paste in your Instagram bio or stories.</p>}
@@ -227,16 +230,24 @@ const CountdownWaitlist = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true, margin: '-60px' }}
-                className="text-center mb-8 md:mb-10"
+                className="text-center mb-10 md:mb-12"
               >
-                <h3 className="font-heading text-[clamp(28px,5vw,44px)] text-foreground mb-3">
-                  <span className="font-light italic">Reserve Your Spot</span> <span className="font-semibold">— Free</span>
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-5" style={{ background: 'rgba(184, 134, 11, 0.06)', border: '1px solid rgba(184, 134, 11, 0.12)', borderRadius: 100 }}>
+                  <span className="font-body text-[10px] uppercase tracking-[0.2em] text-primary font-medium">Free · No credit card</span>
+                </div>
+                <h3 className="font-heading text-[clamp(30px,6vw,48px)] leading-[1.05] text-foreground mb-3">
+                  <span className="font-light italic">Reserve Your Spot</span>
                 </h3>
-                <p className="font-body text-[13px] text-muted-foreground">Join 200+ jewelers already on the waitlist</p>
+                <p className="font-body text-[13px] md:text-[14px] text-muted-foreground max-w-[380px] mx-auto leading-relaxed">
+                  {displayCount > 0 
+                    ? <><span className="text-primary font-medium">{displayCount.toLocaleString()}+</span> jewelers already joined — be next</>
+                    : 'Be among the first jewelers to access Nakshi AI'
+                  }
+                </p>
               </motion.div>
 
               {referrer?.valid && (
-                <div className="mb-6 md:mb-8 flex items-start gap-3 p-4" style={{ background: 'rgba(184, 134, 11, 0.06)', border: '1px solid rgba(184, 134, 11, 0.15)', borderRadius: 6 }}>
+                <div className="mb-6 md:mb-8 flex items-start gap-3 p-4" style={{ background: 'rgba(184, 134, 11, 0.06)', border: '1px solid rgba(184, 134, 11, 0.15)', borderRadius: 8 }}>
                   <span className="text-[18px] mt-0.5">🎉</span>
                   <div>
                     <p className="font-body text-[13px] text-foreground font-medium">
@@ -247,139 +258,169 @@ const CountdownWaitlist = () => {
                 </div>
               )}
               {referrer && !referrer.valid && (
-                <div className="mb-6 md:mb-8 p-4 font-body text-[13px] text-muted-foreground text-center" style={{ background: 'hsl(var(--accent))', borderRadius: 6 }}>
+                <div className="mb-6 md:mb-8 p-4 font-body text-[13px] text-muted-foreground text-center" style={{ background: 'hsl(var(--accent))', borderRadius: 8 }}>
                   This referral code isn't valid. You can still join the waitlist!
                 </div>
               )}
 
               {isDuplicate && (
-                <div className="mb-5 md:mb-6 flex items-center gap-2.5 p-4 font-body text-[13px]" style={{ color: 'hsl(var(--nakshi-success))', background: 'rgba(74, 124, 89, 0.06)', border: '1px solid rgba(74, 124, 89, 0.2)', borderRadius: 6 }}>
+                <div className="mb-5 md:mb-6 flex items-center gap-2.5 p-4 font-body text-[13px]" style={{ color: 'hsl(var(--nakshi-success))', background: 'rgba(74, 124, 89, 0.06)', border: '1px solid rgba(74, 124, 89, 0.2)', borderRadius: 8 }}>
                   <Check size={16} />
                   {submitError}
                 </div>
               )}
 
-              <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
-                {/* Phone & Name row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Card-style form */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                viewport={{ once: true, margin: '-40px' }}
+                className="p-6 md:p-8"
+                style={{
+                  background: 'hsl(var(--background))',
+                  borderRadius: 12,
+                  border: '1px solid hsl(var(--border))',
+                  boxShadow: 'var(--shadow-editorial)',
+                }}
+              >
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
+                  {/* Phone */}
                   <div>
-                    <label className="font-body text-[12px] font-medium text-foreground/70 mb-2 block tracking-wide">WhatsApp Number *</label>
+                    <label className="font-body text-[12px] font-medium text-foreground/80 mb-2 block">WhatsApp Number <span className="text-primary">*</span></label>
                     <input
                       name="phone" type="tel" placeholder="+91 98765 43210"
                       className={inputCls}
-                      style={{ borderColor: errors.phone ? 'hsl(var(--destructive))' : 'hsl(var(--border))', borderRadius: 6, background: 'hsl(var(--background))' }}
+                      style={{ borderColor: errors.phone ? 'hsl(var(--destructive))' : 'hsl(var(--border))', borderRadius: 8, background: 'hsl(var(--secondary))' }}
                       disabled={loading}
                     />
                     {errors.phone && <p className="font-body text-[11px] mt-1.5 text-destructive">{errors.phone}</p>}
                   </div>
-                  <div>
-                    <label className="font-body text-[12px] font-medium text-foreground/70 mb-2 block tracking-wide">Your Name *</label>
-                    <input
-                      name="name" placeholder="Yash"
-                      className={inputCls}
-                      style={{ borderColor: errors.name ? 'hsl(var(--destructive))' : 'hsl(var(--border))', borderRadius: 6, background: 'hsl(var(--background))' }}
-                      disabled={loading}
-                    />
-                    {errors.name && <p className="font-body text-[11px] mt-1.5 text-destructive">{errors.name}</p>}
-                  </div>
-                </div>
 
-                {/* Shop & City row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="font-body text-[12px] font-medium text-foreground/70 mb-2 block tracking-wide">Shop / Business Name *</label>
-                    <input
-                      name="shop" placeholder="Mamta Jewellers"
-                      className={inputCls}
-                      style={{ borderColor: errors.shop ? 'hsl(var(--destructive))' : 'hsl(var(--border))', borderRadius: 6, background: 'hsl(var(--background))' }}
-                      disabled={loading}
-                    />
-                    {errors.shop && <p className="font-body text-[11px] mt-1.5 text-destructive">{errors.shop}</p>}
+                  {/* Name & Shop row */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="font-body text-[12px] font-medium text-foreground/80 mb-2 block">Your Name <span className="text-primary">*</span></label>
+                      <input
+                        name="name" placeholder="Yash"
+                        className={inputCls}
+                        style={{ borderColor: errors.name ? 'hsl(var(--destructive))' : 'hsl(var(--border))', borderRadius: 8, background: 'hsl(var(--secondary))' }}
+                        disabled={loading}
+                      />
+                      {errors.name && <p className="font-body text-[11px] mt-1.5 text-destructive">{errors.name}</p>}
+                    </div>
+                    <div>
+                      <label className="font-body text-[12px] font-medium text-foreground/80 mb-2 block">Shop Name <span className="text-primary">*</span></label>
+                      <input
+                        name="shop" placeholder="Mamta Jewellers"
+                        className={inputCls}
+                        style={{ borderColor: errors.shop ? 'hsl(var(--destructive))' : 'hsl(var(--border))', borderRadius: 8, background: 'hsl(var(--secondary))' }}
+                        disabled={loading}
+                      />
+                      {errors.shop && <p className="font-body text-[11px] mt-1.5 text-destructive">{errors.shop}</p>}
+                    </div>
                   </div>
+
+                  {/* City */}
                   <div>
-                    <label className="font-body text-[12px] font-medium text-foreground/70 mb-2 block tracking-wide">City *</label>
+                    <label className="font-body text-[12px] font-medium text-foreground/80 mb-2 block">City <span className="text-primary">*</span></label>
                     <input
                       name="city" placeholder="Chennai"
                       className={inputCls}
-                      style={{ borderColor: errors.city ? 'hsl(var(--destructive))' : 'hsl(var(--border))', borderRadius: 6, background: 'hsl(var(--background))' }}
+                      style={{ borderColor: errors.city ? 'hsl(var(--destructive))' : 'hsl(var(--border))', borderRadius: 8, background: 'hsl(var(--secondary))' }}
                       disabled={loading}
                     />
                     {errors.city && <p className="font-body text-[11px] mt-1.5 text-destructive">{errors.city}</p>}
                   </div>
-                </div>
 
-                {/* Jewelry Type */}
-                <div>
-                  <label className="font-body text-[12px] font-medium text-foreground/70 mb-3 block tracking-wide">Jewelry Type *</label>
-                  <div className="flex flex-wrap gap-2">
-                    {jewelryTypes.map((type) => {
-                      const checked = selectedJewelry.includes(type);
-                      return (
-                        <button
-                          key={type} type="button" onClick={() => toggleJewelry(type)}
-                          className="flex items-center gap-2 font-body text-[13px] px-4 py-2.5 transition-all duration-200 active:scale-[0.97]"
-                          style={{
-                            borderRadius: 6,
-                            background: checked ? 'hsl(var(--primary))' : 'hsl(var(--background))',
-                            color: checked ? 'hsl(var(--primary-foreground))' : 'hsl(var(--foreground))',
-                            border: `1px solid ${checked ? 'hsl(var(--primary))' : 'hsl(var(--border))'}`,
-                            fontWeight: checked ? 600 : 400,
-                          }}
-                          disabled={loading}
-                        >
-                          {type}
-                        </button>
-                      );
-                    })}
+                  {/* Divider */}
+                  <div className="h-[1px]" style={{ background: 'linear-gradient(90deg, transparent, hsl(var(--border)), transparent)' }} />
+
+                  {/* Jewelry Type */}
+                  <div>
+                    <label className="font-body text-[12px] font-medium text-foreground/80 mb-3 block">What jewelry do you sell? <span className="text-primary">*</span></label>
+                    <div className="flex flex-wrap gap-2">
+                      {jewelryTypes.map((type) => {
+                        const checked = selectedJewelry.includes(type);
+                        return (
+                          <button
+                            key={type} type="button" onClick={() => toggleJewelry(type)}
+                            className="font-body text-[12px] md:text-[13px] px-3.5 py-2 transition-all duration-200 active:scale-[0.97]"
+                            style={{
+                              borderRadius: 100,
+                              background: checked ? 'hsl(var(--primary))' : 'transparent',
+                              color: checked ? 'hsl(var(--primary-foreground))' : 'hsl(var(--foreground) / 0.7)',
+                              border: `1px solid ${checked ? 'hsl(var(--primary))' : 'hsl(var(--border))'}`,
+                              fontWeight: checked ? 600 : 400,
+                            }}
+                            disabled={loading}
+                          >
+                            {type}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {errors.jewelry && <p className="font-body text-[11px] mt-1.5 text-destructive">{errors.jewelry}</p>}
                   </div>
-                  {errors.jewelry && <p className="font-body text-[11px] mt-1.5 text-destructive">{errors.jewelry}</p>}
-                </div>
 
-                {/* How did you hear */}
-                <div>
-                  <label className="font-body text-[12px] font-medium text-foreground/70 mb-2 block tracking-wide">How did you hear about Nakshi AI?</label>
-                  <select
-                    name="hearAbout"
-                    className={inputCls + ' appearance-none cursor-pointer'}
-                    style={{ borderColor: 'hsl(var(--border))', borderRadius: 6, background: 'hsl(var(--background))' }}
-                    defaultValue="" disabled={loading}
+                  {/* How did you hear — collapsible feel */}
+                  <div>
+                    <label className="font-body text-[12px] font-medium text-foreground/80 mb-2 block">How did you hear about us?</label>
+                    <select
+                      name="hearAbout"
+                      className={inputCls + ' appearance-none cursor-pointer'}
+                      style={{ borderColor: 'hsl(var(--border))', borderRadius: 8, background: 'hsl(var(--secondary))' }}
+                      defaultValue="" disabled={loading}
+                    >
+                      <option value="" disabled>Select an option</option>
+                      {hearOptions.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+                    </select>
+                  </div>
+
+                  {/* Referral Code */}
+                  <div>
+                    <label className="font-body text-[12px] font-medium text-foreground/80 mb-2 block">
+                      Referral Code <span className="text-muted-foreground font-normal">(optional)</span>
+                    </label>
+                    <input
+                      name="referral" placeholder="NAK-XXXXXX"
+                      className={inputCls}
+                      style={{ borderColor: 'hsl(var(--border))', borderRadius: 8, background: 'hsl(var(--secondary))' }}
+                      defaultValue={referrer?.code || ''} disabled={loading}
+                    />
+                  </div>
+
+                  {/* Submit */}
+                  <button
+                    type="submit" disabled={loading}
+                    className="w-full h-[54px] md:h-[58px] font-body text-[15px] md:text-[16px] font-semibold bg-primary text-primary-foreground hover:brightness-110 active:scale-[0.98] transition-all duration-200 disabled:opacity-60 flex items-center justify-center gap-2.5 relative overflow-hidden group mt-2"
+                    style={{ borderRadius: 8, boxShadow: 'var(--shadow-gold-glow)' }}
                   >
-                    <option value="" disabled>Select an option</option>
-                    {hearOptions.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
-                  </select>
+                    {loading ? (
+                      <><Loader2 className="animate-spin" size={18} /> Submitting...</>
+                    ) : (
+                      <>Join the Waitlist <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></>
+                    )}
+                  </button>
+
+                  {submitError && !isDuplicate && <p className="font-body text-[12px] text-center text-destructive">{submitError}</p>}
+                </form>
+              </motion.div>
+
+              {/* Trust bar below form */}
+              <div className="flex items-center justify-center gap-6 mt-6 pt-2">
+                <div className="flex items-center gap-1.5">
+                  <Shield size={12} className="text-muted-foreground/50" />
+                  <p className="font-body text-[10px] text-muted-foreground/50">Secure & private</p>
                 </div>
-
-                {/* Referral Code */}
-                <div>
-                  <label className="font-body text-[12px] font-medium text-foreground/70 mb-2 block tracking-wide">Referral Code (optional)</label>
-                  <input
-                    name="referral" placeholder="NAK-XXXXXX"
-                    className={inputCls}
-                    style={{ borderColor: 'hsl(var(--border))', borderRadius: 6, background: 'hsl(var(--background))' }}
-                    defaultValue={referrer?.code || ''} disabled={loading}
-                  />
+                <div className="w-[1px] h-3 bg-border" />
+                <div className="flex items-center gap-1.5">
+                  <Clock size={12} className="text-muted-foreground/50" />
+                  <p className="font-body text-[10px] text-muted-foreground/50">Takes 30 seconds</p>
                 </div>
-
-                {/* Submit */}
-                <button
-                  type="submit" disabled={loading}
-                  className="w-full h-[54px] md:h-[58px] font-body text-[15px] md:text-[16px] font-semibold bg-primary text-primary-foreground hover:brightness-110 active:scale-[0.98] transition-all duration-200 disabled:opacity-60 flex items-center justify-center gap-2.5 relative overflow-hidden group"
-                  style={{ borderRadius: 6, boxShadow: 'var(--shadow-gold-glow)' }}
-                >
-                  {loading ? (
-                    <><Loader2 className="animate-spin" size={18} /> Submitting...</>
-                  ) : (
-                    <>Join the Waitlist <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></>
-                  )}
-                </button>
-
-                {submitError && !isDuplicate && <p className="font-body text-[12px] text-center text-destructive">{submitError}</p>}
-
-                <div className="flex items-center justify-center gap-2 pt-1">
-                  <Shield size={13} className="text-muted-foreground/60" />
-                  <p className="font-body text-[11px] text-muted-foreground/60">We only use your number to send your bot access link on launch day.</p>
-                </div>
-              </form>
+                <div className="w-[1px] h-3 bg-border" />
+                <p className="font-body text-[10px] text-muted-foreground/50">100% free</p>
+              </div>
             </>
           )}
         </div>
