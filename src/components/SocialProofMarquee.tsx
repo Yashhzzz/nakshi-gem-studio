@@ -1,5 +1,6 @@
 const cities = ['Jaipur', 'Surat', 'Mumbai', 'Delhi', 'Ahmedabad', 'Hyderabad', 'Kolkata', 'Pune', 'Chennai', 'Rajkot'];
-const cityStr = cities.map((c) => `●  ${c}`).join('     ');
+const cityStr = cities.map((c) => `●  ${c}`).join('      ');
+const doubled = `${cityStr}      ${cityStr}`;
 
 const SocialProofMarquee = () => {
   return (
@@ -9,17 +10,10 @@ const SocialProofMarquee = () => {
           847 jewelers on the waitlist
         </span>
       </div>
-      <div className="flex-1 overflow-hidden relative group">
-        <div
-          className="flex whitespace-nowrap group-hover:[animation-play-state:paused]"
-          style={{ animation: 'marquee 30s linear infinite' }}
-        >
-          <span className="font-body text-[13px] px-4" style={{ color: '#D3A376' }}>
-            {cityStr}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{cityStr}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          </span>
-          <span className="font-body text-[13px] px-4" style={{ color: '#D3A376' }}>
-            {cityStr}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{cityStr}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          </span>
+      <div className="marquee-track flex-1">
+        <div className="marquee-content" style={{ color: '#D3A376' }}>
+          <span className="font-body text-[13px] whitespace-nowrap">{doubled}</span>
+          <span className="font-body text-[13px] whitespace-nowrap ml-12">{doubled}</span>
         </div>
       </div>
     </div>

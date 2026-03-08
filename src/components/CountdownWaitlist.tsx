@@ -20,7 +20,7 @@ const jewelryTypes = ['Gold 💛', 'Diamond 💎', 'Silver ⚪', 'Imitation 💍
 const hearOptions = ['WhatsApp group', 'Instagram', 'Friend referred me', 'Google', 'Other'];
 
 const inputCls =
-  "w-full h-[52px] bg-background border border-border font-body text-[15px] text-foreground px-4 placeholder:text-nakshi-placeholder focus:border-primary focus:outline-none transition-all";
+  "w-full h-[52px] bg-background border border-border font-body text-[15px] text-foreground px-4 placeholder:text-nakshi-placeholder focus:border-primary focus:outline-none focus:shadow-[0_0_0_3px_rgba(184,134,11,0.12)] transition-all";
 const inputFocus = { borderRadius: 2 };
 
 const CountdownWaitlist = () => {
@@ -28,10 +28,43 @@ const CountdownWaitlist = () => {
   const [isLive, setIsLive] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [refCode, setRefCode] = useState('');
+  const [refLink, setRefLink] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [selectedJewelry, setSelectedJewelry] = useState<string[]>([]);
+  const [copiedLink, setCopiedLink] = useState(false);
+  const [copiedMsg, setCopiedMsg] = useState(false);
+  const [copiedInsta, setCopiedInsta] = useState(false);
+  const [referredBy, setReferredBy] = useState<string | null>(null);
+  const [prefillRef, setPrefillRef] = useState('');
   const launchDate = useRef(getLaunchDate()).current;
   const formRef = useRef<HTMLFormElement>(null);
+
+  // Detect ?ref= parameter
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get('ref');
+    if (ref) {
+      setReferredBy(ref);
+      setPrefillRef(ref);
+      // Store with 30-day expiry
+      const expiry = Date.now() + 30 * 24 * 60 * 60 * 1000;
+      localStorage.setItem('nakshi_ref_code', JSON.stringify({ code: ref, expiry }));
+    } else {
+      // Check stored ref
+      const stored = localStorage.getItem('nakshi_ref_code');
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (parsed.expiry > Date.now()) {
+            setReferredBy(parsed.code);
+            setPrefillRef(parsed.code);
+          } else {
+            localStorage.removeItem('nakshi_ref_code');
+          }
+        } catch { /* ignore */ }
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const tick = () => {
@@ -68,8 +101,11 @@ const CountdownWaitlist = () => {
     }
     setErrors({});
     const code = generateRefCode();
+    const link = `${window.location.origin}/?ref=${code}`;
     setRefCode(code);
+    setRefLink(link);
     localStorage.setItem('nakshi_user_refcode', code);
+    localStorage.setItem('nakshi_user_reflink', link);
     setSubmitted(true);
   };
 
@@ -79,11 +115,29 @@ const CountdownWaitlist = () => {
     );
   };
 
+  const shareMessage = `Bhai, have you seen this? There's a new AI bot that puts your jewelry on a model photo in 60 seconds — right inside WhatsApp. No studio, no photographer. Starts at ₹699/month.\n\nI'm already on the waitlist. Join with my link and get ₹250 off your first month:\n${refLink}`;
+
   const whatsappShare = () => {
-    const text = encodeURIComponent(
-      `I'm getting early access to Nakshi AI — India's first AI jewelry photography bot. Join with my code ${refCode}: nakshiai.com/?ref=${refCode}`
-    );
+    const text = encodeURIComponent(shareMessage);
     window.open(`https://wa.me/?text=${text}`, '_blank');
+  };
+
+  const copyLink = async () => {
+    await navigator.clipboard.writeText(refLink);
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 2000);
+  };
+
+  const copyMessage = async () => {
+    await navigator.clipboard.writeText(shareMessage);
+    setCopiedMsg(true);
+    setTimeout(() => setCopiedMsg(false), 2000);
+  };
+
+  const shareInstagram = async () => {
+    await navigator.clipboard.writeText(refLink);
+    setCopiedInsta(true);
+    setTimeout(() => setCopiedInsta(false), 3000);
   };
 
   const confettiColors = ['#B8860B', '#D3A376', '#4A7C59', '#E6DAC8', '#6E473B'];
@@ -174,17 +228,61 @@ const CountdownWaitlist = () => {
               </div>
 
               <h3 className="font-heading text-[40px] text-foreground mt-8 mb-8">You're on the list! 🎉</h3>
-              <div className="bg-background border border-border p-6 mb-6" style={{ borderRadius: 4 }}>
-                <p className="font-body text-[13px] text-muted-foreground mb-2">Your referral code:</p>
-                <p className="font-heading text-[32px] font-semibold text-primary tracking-widest">{refCode}</p>
+
+              {/* Referral code */}
+              <div className="bg-background border border-border p-6 mb-4" style={{ borderRadius: 4 }}>
+                <p className="font-body text-[13px] text-muted-foreground uppercase mb-2">Your referral code:</p>
+                <p className="font-heading text-[36px] font-semibold text-primary tracking-widest">{refCode}</p>
               </div>
-              <button
-                onClick={whatsappShare}
-                className="w-full font-body text-[14px] font-semibold py-3"
-                style={{ background: '#25D366', color: '#FFF2DF', borderRadius: 2 }}
-              >
-                Copy & Share on WhatsApp →
-              </button>
+
+              {/* Referral link with copy */}
+              <div className="flex items-center gap-2 mb-6">
+                <input
+                  readOnly
+                  value={refLink.replace(/^https?:\/\//, '')}
+                  className="flex-1 bg-background border border-border font-body text-[13px] text-foreground px-4 py-3"
+                  style={{ borderRadius: 2 }}
+                />
+                <button
+                  onClick={copyLink}
+                  className="font-body text-[13px] font-semibold bg-primary text-primary-foreground px-5 py-3 whitespace-nowrap hover:bg-foreground transition-colors duration-200"
+                  style={{ borderRadius: 2 }}
+                >
+                  {copiedLink ? 'Copied! ✓' : 'Copy Link'}
+                </button>
+              </div>
+
+              {/* Share buttons */}
+              <div className="space-y-3">
+                <button
+                  onClick={whatsappShare}
+                  className="w-full font-body text-[14px] font-semibold py-3"
+                  style={{ background: '#25D366', color: '#FFF2DF', borderRadius: 2 }}
+                >
+                  Share on WhatsApp →
+                </button>
+                <button
+                  onClick={copyMessage}
+                  className="w-full font-body text-[14px] font-semibold py-3 bg-secondary text-foreground hover:bg-accent transition-colors duration-200"
+                  style={{ borderRadius: 2 }}
+                >
+                  {copiedMsg ? 'Copied! ✓' : 'Copy Message'}
+                </button>
+                <div className="relative">
+                  <button
+                    onClick={shareInstagram}
+                    className="w-full font-body text-[14px] font-semibold py-3"
+                    style={{ background: '#E1306C', color: '#FFF2DF', borderRadius: 2 }}
+                  >
+                    Share on Instagram
+                  </button>
+                  {copiedInsta && (
+                    <p className="font-body text-[12px] text-primary mt-2">
+                      Link copied! Paste in your Instagram bio or stories.
+                    </p>
+                  )}
+                </div>
+              </div>
             </motion.div>
           ) : (
             <>
@@ -193,10 +291,22 @@ const CountdownWaitlist = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7 }}
                 viewport={{ once: true, margin: '-60px' }}
-                className="font-heading text-[40px] font-semibold text-foreground text-center mb-10"
+                className="font-heading text-[40px] font-semibold text-foreground text-center mb-6"
               >
                 Reserve Your Spot — Free
               </motion.h3>
+
+              {/* Referral banner */}
+              {referredBy && (
+                <div
+                  className="mb-8 p-4 font-body text-[13px] text-nakshi-text-body text-center"
+                  style={{ background: '#FFF9F0', border: '1px solid #B8860B', borderRadius: 4 }}
+                >
+                  You were referred by a Nakshi AI member 🎉<br />
+                  You'll get ₹250 off your first month.
+                </div>
+              )}
+
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
                 {/* WhatsApp Number */}
                 <div>
@@ -208,7 +318,7 @@ const CountdownWaitlist = () => {
                     type="tel"
                     placeholder="+91 98765 43210"
                     className={inputCls}
-                    style={{ ...inputFocus, boxShadow: errors.phone ? undefined : undefined }}
+                    style={inputFocus}
                   />
                   {errors.phone && (
                     <p className="font-body text-[12px] mt-1" style={{ color: '#8B1A1A' }}>
@@ -222,7 +332,7 @@ const CountdownWaitlist = () => {
                   <label className="font-body text-[13px] font-medium text-nakshi-text-body mb-2 block">
                     Your Name *
                   </label>
-                  <input name="name" placeholder="Priya Sharma" className={inputCls} style={inputFocus} />
+                  <input name="name" placeholder="Yash" className={inputCls} style={inputFocus} />
                   {errors.name && (
                     <p className="font-body text-[12px] mt-1" style={{ color: '#8B1A1A' }}>
                       {errors.name}
@@ -235,7 +345,7 @@ const CountdownWaitlist = () => {
                   <label className="font-body text-[13px] font-medium text-nakshi-text-body mb-2 block">
                     Shop / Business Name *
                   </label>
-                  <input name="shop" placeholder="Sharma Jewellers" className={inputCls} style={inputFocus} />
+                  <input name="shop" placeholder="Mamta Jewellers" className={inputCls} style={inputFocus} />
                   {errors.shop && (
                     <p className="font-body text-[12px] mt-1" style={{ color: '#8B1A1A' }}>
                       {errors.shop}
@@ -246,7 +356,7 @@ const CountdownWaitlist = () => {
                 {/* City */}
                 <div>
                   <label className="font-body text-[13px] font-medium text-nakshi-text-body mb-2 block">City *</label>
-                  <input name="city" placeholder="Jaipur" className={inputCls} style={inputFocus} />
+                  <input name="city" placeholder="Chennai" className={inputCls} style={inputFocus} />
                   {errors.city && (
                     <p className="font-body text-[12px] mt-1" style={{ color: '#8B1A1A' }}>
                       {errors.city}
@@ -328,7 +438,13 @@ const CountdownWaitlist = () => {
                   <label className="font-body text-[13px] font-medium text-nakshi-text-body mb-2 block">
                     Referral Code (optional)
                   </label>
-                  <input name="referral" placeholder="NAK-XXXXXX" className={inputCls} style={inputFocus} />
+                  <input
+                    name="referral"
+                    placeholder="NAK-XXXXXX"
+                    className={inputCls}
+                    style={inputFocus}
+                    defaultValue={prefillRef}
+                  />
                 </div>
 
                 {/* Submit */}

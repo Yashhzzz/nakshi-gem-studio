@@ -20,7 +20,7 @@ const cards = [
 
 const ProblemSection = () => {
   return (
-    <section className="bg-secondary py-[120px]">
+    <section className="bg-secondary py-[80px] md:py-[120px]">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 lg:px-[60px]">
         <motion.p
           initial={{ opacity: 0, y: 32 }}
@@ -52,7 +52,7 @@ const ProblemSection = () => {
               className="bg-background border border-border p-10 hover:-translate-y-1 hover:shadow-lg transition-all duration-[250ms] cursor-default"
               style={{ borderRadius: 4 }}
             >
-              <span className="font-heading text-[72px] text-accent leading-none block mb-4">{card.icon}</span>
+              <span className="font-heading text-[64px] text-accent leading-none block mb-4">{card.icon}</span>
               <h3 className="font-heading text-[28px] font-semibold text-foreground mb-3">{card.title}</h3>
               <p className="font-body text-[15px] text-nakshi-text-body leading-relaxed">{card.body}</p>
             </motion.div>

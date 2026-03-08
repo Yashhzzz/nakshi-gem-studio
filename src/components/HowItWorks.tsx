@@ -20,7 +20,7 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section className="bg-background py-[120px]" id="how-it-works">
+    <section className="bg-background py-[120px] md:py-[120px] py-[80px]" id="how-it-works">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 lg:px-[60px]">
         <motion.p
           initial={{ opacity: 0, y: 32 }}
@@ -42,8 +42,11 @@ const HowItWorks = () => {
         </motion.h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
-          {/* Dashed connector — desktop only */}
-          <div className="hidden md:block absolute top-[48px] left-[20%] right-[20%] border-t border-dashed border-border" />
+          {/* Dashed connector — desktop only, positioned at mid-card height */}
+          <div
+            className="hidden md:block absolute left-[16%] right-[16%] border-t border-dashed border-border"
+            style={{ top: '30%', zIndex: 0 }}
+          />
 
           {steps.map((step, i) => (
             <motion.div
@@ -52,7 +55,7 @@ const HowItWorks = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: i * 0.1 }}
               viewport={{ once: true, margin: '-60px' }}
-              className="text-center relative"
+              className="text-center relative z-[1]"
             >
               <span className="font-heading text-[96px] font-light text-accent block leading-none">
                 {step.num}

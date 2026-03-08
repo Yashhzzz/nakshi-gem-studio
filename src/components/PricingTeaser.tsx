@@ -29,7 +29,7 @@ const plans = [
 
 const PricingTeaser = () => {
   return (
-    <section className="bg-background py-[120px]" id="pricing">
+    <section className="bg-background py-[80px] md:py-[120px]" id="pricing">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 lg:px-[60px]">
         <motion.p
           initial={{ opacity: 0, y: 32 }}
@@ -67,9 +67,9 @@ const PricingTeaser = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: i * 0.1 }}
               viewport={{ once: true, margin: '-60px' }}
-              className={`relative p-8 ${
+              className={`relative p-8 overflow-visible ${
                 plan.popular
-                  ? 'border-2 border-primary scale-[1.02]'
+                  ? 'border-2 border-primary scale-[1.02] mt-[14px]'
                   : 'bg-background border border-border'
               }`}
               style={{
@@ -80,7 +80,7 @@ const PricingTeaser = () => {
             >
               {plan.popular && (
                 <span
-                  className="absolute -top-[14px] left-1/2 -translate-x-1/2 font-body text-[11px] bg-primary text-primary-foreground px-4 py-1 whitespace-nowrap"
+                  className="absolute -top-[14px] left-1/2 -translate-x-1/2 font-body text-[11px] font-medium uppercase bg-primary text-primary-foreground px-4 py-1 whitespace-nowrap"
                   style={{ borderRadius: 100 }}
                 >
                   ★ Most Popular
