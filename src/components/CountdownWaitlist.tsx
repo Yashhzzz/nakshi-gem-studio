@@ -18,7 +18,7 @@ const jewelryTypes = ['Gold 💛', 'Diamond 💎', 'Silver ⚪', 'Imitation 💍
 const hearOptions = ['WhatsApp group', 'Instagram', 'Friend referred me', 'Google', 'Other'];
 
 const inputCls =
-  "w-full h-[52px] bg-background border border-border font-body text-[15px] text-foreground px-4 placeholder:text-nakshi-placeholder focus:border-primary focus:outline-none focus:shadow-[0_0_0_3px_rgba(184,134,11,0.12)] transition-all";
+  "w-full h-[48px] md:h-[52px] bg-background border border-border font-body text-[14px] md:text-[15px] text-foreground px-4 placeholder:text-nakshi-placeholder focus:border-primary focus:outline-none focus:shadow-[0_0_0_3px_rgba(184,134,11,0.12)] transition-all";
 const inputFocus = { borderRadius: 2 };
 
 const CountdownWaitlist = () => {
@@ -106,36 +106,36 @@ const CountdownWaitlist = () => {
   return (
     <>
       {/* Countdown */}
-      <section className="py-[60px]" style={{ background: '#3E2522' }}>
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 lg:px-[60px] text-center">
+      <section className="py-[40px] md:py-[60px]" style={{ background: '#3E2522' }}>
+        <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-[60px] text-center">
           {isLive ? (
-            <motion.p initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="font-heading text-[48px] text-primary">
+            <motion.p initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="font-heading text-[36px] md:text-[48px] text-primary">
               We're Live! 🎉
             </motion.p>
           ) : (
             <>
-              <p className="font-body text-[12px] uppercase tracking-[0.2em] mb-8" style={{ color: '#D3A376' }}>Launching In</p>
-              <div className="flex items-start justify-center gap-2 md:gap-4 flex-wrap">
+              <p className="font-body text-[11px] md:text-[12px] uppercase tracking-[0.2em] mb-5 md:mb-8" style={{ color: '#D3A376' }}>Launching In</p>
+              <div className="flex items-start justify-center gap-1.5 md:gap-4">
                 {[
                   { val: timeLeft.days, label: 'Days' },
                   { val: timeLeft.hrs, label: 'Hrs' },
                   { val: timeLeft.mins, label: 'Mins' },
                   { val: timeLeft.secs, label: 'Secs' },
                 ].map((block, i, arr) => (
-                  <div key={block.label} className="flex items-start gap-2 md:gap-4">
+                  <div key={block.label} className="flex items-start gap-1.5 md:gap-4">
                     <div className="flex flex-col items-center">
-                      <div className="flex items-center justify-center border w-[72px] h-[72px] md:w-[100px] md:h-[100px]" style={{ background: '#291C0E', borderColor: '#6E473B', borderRadius: 4 }}>
-                        <span className="font-heading text-[40px] md:text-[64px] font-light leading-none" style={{ color: '#FFF2DF' }}>
+                      <div className="flex items-center justify-center border w-[60px] h-[60px] md:w-[100px] md:h-[100px]" style={{ background: '#291C0E', borderColor: '#6E473B', borderRadius: 4 }}>
+                        <span className="font-heading text-[28px] md:text-[64px] font-light leading-none" style={{ color: '#FFF2DF' }}>
                           {String(block.val).padStart(2, '0')}
                         </span>
                       </div>
-                      <span className="font-body text-[11px] uppercase text-muted-foreground mt-2">{block.label}</span>
+                      <span className="font-body text-[10px] md:text-[11px] uppercase text-muted-foreground mt-1.5 md:mt-2">{block.label}</span>
                     </div>
-                    {i < arr.length - 1 && <span className="font-heading text-[32px] md:text-[48px] text-primary mt-3 md:mt-4">:</span>}
+                    {i < arr.length - 1 && <span className="font-heading text-[22px] md:text-[48px] text-primary mt-3 md:mt-4">:</span>}
                   </div>
                 ))}
               </div>
-              <p className="font-body text-[14px] mt-6" style={{ color: '#D3A376' }}>
+              <p className="font-body text-[13px] md:text-[14px] mt-4 md:mt-6" style={{ color: '#D3A376' }}>
                 {displayCount > 0 ? `${displayCount.toLocaleString()} jewelers already registered` : 'Join the waitlist today'}
               </p>
             </>
@@ -144,8 +144,8 @@ const CountdownWaitlist = () => {
       </section>
 
       {/* Waitlist Form */}
-      <section className="bg-secondary py-[80px]" id="waitlist">
-        <div className="max-w-[560px] mx-auto px-6">
+      <section className="bg-secondary py-[60px] md:py-[80px]" id="waitlist">
+        <div className="max-w-[560px] mx-auto px-5 md:px-6">
           {submitted ? (
             <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center relative">
               <div className="absolute inset-x-0 top-0 h-0 overflow-visible pointer-events-none">
@@ -159,82 +159,80 @@ const CountdownWaitlist = () => {
                   }} />
                 ))}
               </div>
-              <h3 className="font-heading text-[40px] text-foreground mt-8 mb-8">You're on the list! 🎉</h3>
-              <div className="bg-background border border-border p-6 mb-4" style={{ borderRadius: 4 }}>
-                <p className="font-body text-[13px] text-muted-foreground uppercase mb-2">Your referral code:</p>
-                <p className="font-heading text-[36px] font-semibold text-primary tracking-widest">{refCode}</p>
+              <h3 className="font-heading text-[32px] md:text-[40px] text-foreground mt-6 md:mt-8 mb-6 md:mb-8">You're on the list! 🎉</h3>
+              <div className="bg-background border border-border p-5 md:p-6 mb-4" style={{ borderRadius: 4 }}>
+                <p className="font-body text-[12px] md:text-[13px] text-muted-foreground uppercase mb-2">Your referral code:</p>
+                <p className="font-heading text-[28px] md:text-[36px] font-semibold text-primary tracking-widest">{refCode}</p>
               </div>
-              <div className="flex items-center gap-2 mb-6">
-                <input readOnly value={refLink.replace(/^https?:\/\//, '')} className="flex-1 bg-background border border-border font-body text-[13px] text-foreground px-4 py-3" style={{ borderRadius: 2 }} />
-                <button onClick={copyLink} className="font-body text-[13px] font-semibold bg-primary text-primary-foreground px-5 py-3 whitespace-nowrap hover:bg-foreground transition-colors duration-200" style={{ borderRadius: 2 }}>
-                  {copiedLink ? 'Copied! ✓' : 'Copy Link'}
+              <div className="flex items-center gap-2 mb-5 md:mb-6">
+                <input readOnly value={refLink.replace(/^https?:\/\//, '')} className="flex-1 min-w-0 bg-background border border-border font-body text-[12px] md:text-[13px] text-foreground px-3 md:px-4 py-2.5 md:py-3" style={{ borderRadius: 2 }} />
+                <button onClick={copyLink} className="font-body text-[12px] md:text-[13px] font-semibold bg-primary text-primary-foreground px-4 md:px-5 py-2.5 md:py-3 whitespace-nowrap hover:bg-foreground active:scale-[0.98] transition-all duration-200" style={{ borderRadius: 2 }}>
+                  {copiedLink ? 'Copied! ✓' : 'Copy'}
                 </button>
               </div>
-              <div className="space-y-3">
-                <button onClick={whatsappShare} className="w-full font-body text-[14px] font-semibold py-3" style={{ background: '#25D366', color: '#FFF2DF', borderRadius: 2 }}>Share on WhatsApp →</button>
-                <button onClick={copyMessage} className="w-full font-body text-[14px] font-semibold py-3 bg-secondary text-foreground hover:bg-accent transition-colors duration-200" style={{ borderRadius: 2 }}>
+              <div className="space-y-2.5 md:space-y-3">
+                <button onClick={whatsappShare} className="w-full font-body text-[13px] md:text-[14px] font-semibold py-3 active:scale-[0.98] transition-transform" style={{ background: '#25D366', color: '#FFF2DF', borderRadius: 2 }}>Share on WhatsApp →</button>
+                <button onClick={copyMessage} className="w-full font-body text-[13px] md:text-[14px] font-semibold py-3 bg-secondary text-foreground hover:bg-accent active:scale-[0.98] transition-all duration-200" style={{ borderRadius: 2 }}>
                   {copiedMsg ? 'Copied! ✓' : 'Copy Message'}
                 </button>
                 <div className="relative">
-                  <button onClick={shareInstagram} className="w-full font-body text-[14px] font-semibold py-3" style={{ background: '#E1306C', color: '#FFF2DF', borderRadius: 2 }}>Share on Instagram</button>
-                  {copiedInsta && <p className="font-body text-[12px] text-primary mt-2">Link copied! Paste in your Instagram bio or stories.</p>}
+                  <button onClick={shareInstagram} className="w-full font-body text-[13px] md:text-[14px] font-semibold py-3 active:scale-[0.98] transition-transform" style={{ background: '#E1306C', color: '#FFF2DF', borderRadius: 2 }}>Share on Instagram</button>
+                  {copiedInsta && <p className="font-body text-[11px] md:text-[12px] text-primary mt-2">Link copied! Paste in your Instagram bio or stories.</p>}
                 </div>
               </div>
             </motion.div>
           ) : (
             <>
-              <motion.h3 initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} viewport={{ once: true, margin: '-60px' }} className="font-heading text-[40px] font-semibold text-foreground text-center mb-6">
+              <motion.h3 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true, margin: '-60px' }} className="font-heading text-[28px] md:text-[40px] font-semibold text-foreground text-center mb-5 md:mb-6">
                 Reserve Your Spot — Free
               </motion.h3>
 
-              {/* Referral banner */}
               {referrer?.valid && (
-                <div className="mb-8 p-4 font-body text-[13px] text-nakshi-text-body text-center" style={{ background: '#FFF9F0', border: '1px solid #B8860B', borderRadius: 4 }}>
+                <div className="mb-6 md:mb-8 p-3.5 md:p-4 font-body text-[12px] md:text-[13px] text-nakshi-text-body text-center" style={{ background: '#FFF9F0', border: '1px solid #B8860B', borderRadius: 4 }}>
                   Referred by <strong>{referrer.shopName || 'a Nakshi AI member'}</strong>{referrer.city ? ` from ${referrer.city}` : ''} 🎉<br />
                   You'll get ₹250 off your first month.
                 </div>
               )}
               {referrer && !referrer.valid && (
-                <div className="mb-8 p-4 font-body text-[13px] text-muted-foreground text-center" style={{ background: '#FAF9F6', border: '1px solid #D7C9B8', borderRadius: 4 }}>
+                <div className="mb-6 md:mb-8 p-3.5 md:p-4 font-body text-[12px] md:text-[13px] text-muted-foreground text-center" style={{ background: '#FAF9F6', border: '1px solid #D7C9B8', borderRadius: 4 }}>
                   This referral code isn't valid. You can still join the waitlist!
                 </div>
               )}
 
-              {/* Duplicate celebration */}
               {isDuplicate && (
-                <div className="mb-6 p-4 font-body text-[14px] text-center" style={{ color: '#4A7C59', background: '#F0F7F2', border: '1px solid #4A7C59', borderRadius: 4 }}>
+                <div className="mb-5 md:mb-6 p-3.5 md:p-4 font-body text-[13px] md:text-[14px] text-center" style={{ color: '#4A7C59', background: '#F0F7F2', border: '1px solid #4A7C59', borderRadius: 4 }}>
                   {submitError}
                 </div>
               )}
 
-              <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
                 <div>
-                  <label className="font-body text-[13px] font-medium text-nakshi-text-body mb-2 block">WhatsApp Number *</label>
+                  <label className="font-body text-[12px] md:text-[13px] font-medium text-nakshi-text-body mb-1.5 md:mb-2 block">WhatsApp Number *</label>
                   <input name="phone" type="tel" placeholder="+91 98765 43210" className={inputCls} style={inputFocus} disabled={loading} />
-                  {errors.phone && <p className="font-body text-[12px] mt-1" style={{ color: '#8B1A1A' }}>{errors.phone}</p>}
+                  {errors.phone && <p className="font-body text-[11px] md:text-[12px] mt-1" style={{ color: '#8B1A1A' }}>{errors.phone}</p>}
                 </div>
                 <div>
-                  <label className="font-body text-[13px] font-medium text-nakshi-text-body mb-2 block">Your Name *</label>
+                  <label className="font-body text-[12px] md:text-[13px] font-medium text-nakshi-text-body mb-1.5 md:mb-2 block">Your Name *</label>
                   <input name="name" placeholder="Yash" className={inputCls} style={inputFocus} disabled={loading} />
-                  {errors.name && <p className="font-body text-[12px] mt-1" style={{ color: '#8B1A1A' }}>{errors.name}</p>}
+                  {errors.name && <p className="font-body text-[11px] md:text-[12px] mt-1" style={{ color: '#8B1A1A' }}>{errors.name}</p>}
                 </div>
                 <div>
-                  <label className="font-body text-[13px] font-medium text-nakshi-text-body mb-2 block">Shop / Business Name *</label>
+                  <label className="font-body text-[12px] md:text-[13px] font-medium text-nakshi-text-body mb-1.5 md:mb-2 block">Shop / Business Name *</label>
                   <input name="shop" placeholder="Mamta Jewellers" className={inputCls} style={inputFocus} disabled={loading} />
-                  {errors.shop && <p className="font-body text-[12px] mt-1" style={{ color: '#8B1A1A' }}>{errors.shop}</p>}
+                  {errors.shop && <p className="font-body text-[11px] md:text-[12px] mt-1" style={{ color: '#8B1A1A' }}>{errors.shop}</p>}
                 </div>
                 <div>
-                  <label className="font-body text-[13px] font-medium text-nakshi-text-body mb-2 block">City *</label>
+                  <label className="font-body text-[12px] md:text-[13px] font-medium text-nakshi-text-body mb-1.5 md:mb-2 block">City *</label>
                   <input name="city" placeholder="Chennai" className={inputCls} style={inputFocus} disabled={loading} />
-                  {errors.city && <p className="font-body text-[12px] mt-1" style={{ color: '#8B1A1A' }}>{errors.city}</p>}
+                  {errors.city && <p className="font-body text-[11px] md:text-[12px] mt-1" style={{ color: '#8B1A1A' }}>{errors.city}</p>}
                 </div>
                 <div>
-                  <label className="font-body text-[13px] font-medium text-nakshi-text-body mb-3 block">Jewelry Type *</label>
-                  <div className="flex flex-wrap gap-3">
+                  <label className="font-body text-[12px] md:text-[13px] font-medium text-nakshi-text-body mb-2 md:mb-3 block">Jewelry Type *</label>
+                  <div className="flex flex-wrap gap-2.5 md:gap-3">
                     {jewelryTypes.map((type) => {
                       const checked = selectedJewelry.includes(type);
                       return (
-                        <button key={type} type="button" onClick={() => toggleJewelry(type)} className="flex items-center gap-2 font-body text-[14px] text-nakshi-text-body" disabled={loading}>
+                        <button key={type} type="button" onClick={() => toggleJewelry(type)} className="flex items-center gap-1.5 md:gap-2 font-body text-[13px] md:text-[14px] text-nakshi-text-body" disabled={loading}>
                           <span className="w-[18px] h-[18px] flex items-center justify-center border-2 flex-shrink-0" style={{ borderRadius: 2, borderColor: checked ? '#B8860B' : '#D7C9B8', background: checked ? '#B8860B' : 'transparent' }}>
                             {checked && <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="#FFF2DF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>}
                           </span>
@@ -243,24 +241,24 @@ const CountdownWaitlist = () => {
                       );
                     })}
                   </div>
-                  {errors.jewelry && <p className="font-body text-[12px] mt-1" style={{ color: '#8B1A1A' }}>{errors.jewelry}</p>}
+                  {errors.jewelry && <p className="font-body text-[11px] md:text-[12px] mt-1" style={{ color: '#8B1A1A' }}>{errors.jewelry}</p>}
                 </div>
                 <div>
-                  <label className="font-body text-[13px] font-medium text-nakshi-text-body mb-2 block">How did you hear about Nakshi AI?</label>
+                  <label className="font-body text-[12px] md:text-[13px] font-medium text-nakshi-text-body mb-1.5 md:mb-2 block">How did you hear about Nakshi AI?</label>
                   <select name="hearAbout" className={inputCls + ' appearance-none cursor-pointer'} style={inputFocus} defaultValue="" disabled={loading}>
                     <option value="" disabled>Select an option</option>
                     {hearOptions.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="font-body text-[13px] font-medium text-nakshi-text-body mb-2 block">Referral Code (optional)</label>
+                  <label className="font-body text-[12px] md:text-[13px] font-medium text-nakshi-text-body mb-1.5 md:mb-2 block">Referral Code (optional)</label>
                   <input name="referral" placeholder="NAK-XXXXXX" className={inputCls} style={inputFocus} defaultValue={referrer?.code || ''} disabled={loading} />
                 </div>
-                <button type="submit" disabled={loading} className="w-full h-[56px] font-body text-[16px] font-semibold bg-primary text-primary-foreground hover:bg-foreground transition-colors duration-200 disabled:opacity-60 flex items-center justify-center gap-2" style={{ borderRadius: 2 }}>
+                <button type="submit" disabled={loading} className="w-full h-[50px] md:h-[56px] font-body text-[15px] md:text-[16px] font-semibold bg-primary text-primary-foreground hover:bg-foreground active:scale-[0.98] transition-all duration-200 disabled:opacity-60 flex items-center justify-center gap-2" style={{ borderRadius: 2 }}>
                   {loading ? <><Loader2 className="animate-spin" size={18} /> Submitting...</> : 'Join the Waitlist →'}
                 </button>
-                {submitError && !isDuplicate && <p className="font-body text-[13px] text-center" style={{ color: '#8B1A1A' }}>{submitError}</p>}
-                <p className="font-body text-[12px] text-muted-foreground text-center">🔒 We only use your number to send your bot access link on launch day.</p>
+                {submitError && !isDuplicate && <p className="font-body text-[12px] md:text-[13px] text-center" style={{ color: '#8B1A1A' }}>{submitError}</p>}
+                <p className="font-body text-[11px] md:text-[12px] text-muted-foreground text-center">🔒 We only use your number to send your bot access link on launch day.</p>
               </form>
             </>
           )}

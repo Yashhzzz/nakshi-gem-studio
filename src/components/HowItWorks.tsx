@@ -37,8 +37,7 @@ const HowItWorks = () => {
   }, []);
 
   return (
-    <section className="bg-background py-[80px] md:py-[120px] relative overflow-hidden" id="how-it-works">
-      {/* Subtle background pattern */}
+    <section className="bg-background py-[60px] md:py-[120px] relative overflow-hidden" id="how-it-works">
       <div className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
           backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)',
@@ -46,39 +45,103 @@ const HowItWorks = () => {
         }}
       />
 
-      <div className="max-w-[1280px] mx-auto px-6 md:px-10 lg:px-[60px] relative z-10">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-[60px] relative z-10">
         <motion.p
-          initial={{ opacity: 0, y: 32 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true, margin: '-60px' }}
-          className="font-body text-[12px] uppercase tracking-[0.2em] text-primary text-center mb-4"
+          className="font-body text-[11px] md:text-[12px] uppercase tracking-[0.18em] md:tracking-[0.2em] text-primary text-center mb-3 md:mb-4"
         >
           ✦&nbsp; HOW IT WORKS &nbsp;✦
         </motion.p>
         <motion.h2
-          initial={{ opacity: 0, y: 32 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
           viewport={{ once: true, margin: '-60px' }}
-          className="font-heading text-[clamp(36px,5vw,52px)] font-medium text-foreground text-center mb-6"
+          className="font-heading text-[clamp(28px,6vw,52px)] font-medium text-foreground text-center mb-4 md:mb-6"
         >
           Three Steps. No Learning Curve.
         </motion.h2>
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
           viewport={{ once: true, margin: '-60px' }}
-          className="font-body text-[15px] text-muted-foreground text-center max-w-[480px] mx-auto mb-20"
+          className="font-body text-[14px] md:text-[15px] text-muted-foreground text-center max-w-[480px] mx-auto mb-12 md:mb-20"
         >
           From raw photo to model shot in under a minute. Here's the entire workflow.
         </motion.p>
 
-        {/* Steps with connecting line */}
-        <div className="relative">
-          {/* Connecting line (desktop) */}
-          <div className="hidden md:block absolute top-[52px] left-[16.67%] right-[16.67%] h-[2px] z-0">
+        {/* Mobile: Vertical timeline */}
+        <div className="md:hidden space-y-6">
+          {steps.map((step, i) => {
+            const isActive = activeStep === i;
+            const Icon = step.icon;
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                viewport={{ once: true }}
+                onClick={() => setActiveStep(i)}
+                className="flex gap-4"
+              >
+                {/* Left: Circle + line */}
+                <div className="flex flex-col items-center flex-shrink-0">
+                  <motion.div
+                    className="w-14 h-14 rounded-full flex items-center justify-center relative"
+                    animate={{
+                      background: isActive
+                        ? `linear-gradient(135deg, ${step.accent}20, ${step.accent}08)`
+                        : 'hsl(var(--secondary))',
+                      boxShadow: isActive
+                        ? `0 0 0 2px ${step.accent}, 0 8px 24px -4px ${step.accent}30`
+                        : '0 0 0 1px hsl(var(--border))',
+                    }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <motion.span
+                      className="absolute -top-1 -right-1 font-body text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center text-primary-foreground"
+                      style={{ background: step.accent }}
+                    >
+                      {step.num}
+                    </motion.span>
+                    <Icon size={24} strokeWidth={1.5} style={{ color: isActive ? step.accent : 'hsl(var(--muted-foreground))' }} />
+                  </motion.div>
+                  {i < 2 && (
+                    <div className="w-[2px] flex-1 min-h-[20px] mt-2 rounded-full" style={{ background: 'hsl(var(--border))' }} />
+                  )}
+                </div>
+
+                {/* Right: Content */}
+                <div className="pb-2 pt-1">
+                  <motion.h3
+                    className="font-heading text-[20px] font-semibold mb-1.5"
+                    animate={{ color: isActive ? 'hsl(var(--foreground))' : 'hsl(var(--foreground))' }}
+                  >
+                    {step.title}
+                  </motion.h3>
+                  <p className="font-body text-[14px] text-nakshi-text-body leading-relaxed">
+                    {step.body}
+                  </p>
+                  <motion.div
+                    className="h-[2px] mt-3 rounded-full"
+                    style={{ background: step.accent }}
+                    animate={{ width: isActive ? 40 : 0, opacity: isActive ? 1 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Desktop: Horizontal with connecting line */}
+        <div className="hidden md:block relative">
+          <div className="absolute top-[52px] left-[16.67%] right-[16.67%] h-[2px] z-0">
             <div className="w-full h-full bg-border rounded-full overflow-hidden">
               <motion.div
                 className="h-full rounded-full"
@@ -91,12 +154,11 @@ const HowItWorks = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 relative z-[1]">
+          <div className="grid grid-cols-3 gap-8 relative z-[1]">
             {steps.map((step, i) => {
               const isActive = activeStep === i;
               const isPast = activeStep > i;
               const Icon = step.icon;
-
               return (
                 <motion.div
                   key={i}
@@ -107,7 +169,6 @@ const HowItWorks = () => {
                   className="text-center relative cursor-default"
                   onHoverStart={() => setActiveStep(i)}
                 >
-                  {/* Step circle with icon */}
                   <div className="flex justify-center mb-8">
                     <motion.div
                       className="relative w-[104px] h-[104px] rounded-full flex items-center justify-center"
@@ -125,18 +186,14 @@ const HowItWorks = () => {
                       }}
                       transition={{ duration: 0.4 }}
                     >
-                      {/* Number badge */}
                       <motion.span
                         className="absolute -top-1 -right-1 font-body text-[11px] font-bold rounded-full w-7 h-7 flex items-center justify-center text-primary-foreground"
                         style={{ background: step.accent }}
-                        animate={{
-                          scale: isActive ? 1.1 : 1,
-                        }}
+                        animate={{ scale: isActive ? 1.1 : 1 }}
                         transition={{ duration: 0.3 }}
                       >
                         {step.num}
                       </motion.span>
-
                       <motion.div
                         animate={{
                           scale: isActive ? 1.15 : 1,
@@ -148,28 +205,14 @@ const HowItWorks = () => {
                       </motion.div>
                     </motion.div>
                   </div>
-
-                  <motion.h3
-                    className="font-heading text-[26px] font-semibold mb-3"
-                    animate={{
-                      color: isActive ? 'hsl(var(--foreground))' : 'hsl(var(--foreground))',
-                    }}
-                  >
-                    {step.title}
-                  </motion.h3>
-
+                  <h3 className="font-heading text-[26px] font-semibold mb-3">{step.title}</h3>
                   <p className="font-body text-[15px] text-nakshi-text-body leading-relaxed max-w-[320px] mx-auto">
                     {step.body}
                   </p>
-
-                  {/* Active indicator bar */}
                   <motion.div
                     className="mx-auto mt-6 h-[3px] rounded-full"
                     style={{ background: step.accent }}
-                    animate={{
-                      width: isActive ? 48 : 0,
-                      opacity: isActive ? 1 : 0,
-                    }}
+                    animate={{ width: isActive ? 48 : 0, opacity: isActive ? 1 : 0 }}
                     transition={{ duration: 0.4 }}
                   />
                 </motion.div>
@@ -178,8 +221,8 @@ const HowItWorks = () => {
           </div>
         </div>
 
-        {/* Step indicator pills (mobile-friendly) */}
-        <div className="flex justify-center gap-2 mt-12">
+        {/* Step indicator pills */}
+        <div className="flex justify-center gap-2 mt-8 md:mt-12">
           {steps.map((step, i) => (
             <motion.button
               key={i}
@@ -200,11 +243,11 @@ const HowItWorks = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
-          className="text-center mt-14"
+          className="text-center mt-10 md:mt-14"
         >
           <a
             href="#waitlist"
-            className="inline-flex items-center gap-2 font-body text-[14px] font-semibold text-primary hover:text-foreground transition-colors group"
+            className="inline-flex items-center gap-2 font-body text-[13px] md:text-[14px] font-semibold text-primary hover:text-foreground transition-colors group"
           >
             Join the Waitlist to Try It First
             <motion.span
