@@ -2,13 +2,18 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
+const LAUNCH_DATE = new Date('2026-04-01T00:00:00+05:30');
+
 const AnnouncementBanner = () => {
   const [visible, setVisible] = useState(false);
+  const [daysLeft, setDaysLeft] = useState(0);
 
   useEffect(() => {
     if (!sessionStorage.getItem('nakshi_banner_dismissed')) {
       setVisible(true);
     }
+    const diff = LAUNCH_DATE.getTime() - Date.now();
+    setDaysLeft(Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24))));
   }, []);
 
   const dismiss = () => {
