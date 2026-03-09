@@ -33,7 +33,7 @@ const AnnouncementBanner = () => {
         >
           <p className="font-body text-[12px] md:text-[13px] text-nakshi-text-on-dark/90 text-center px-10 tracking-wide">
             <span className="text-nakshi-gold-light">✦</span>
-            &nbsp; Launching in 15 days · 20 free images + early access&nbsp;
+            &nbsp; Launching in {daysLeft} days · 20 free images + early access&nbsp;
             <a href="#waitlist" className="text-nakshi-gold-light underline underline-offset-2 font-medium hover:text-primary transition-colors">Join Free →</a>
           </p>
           <button
