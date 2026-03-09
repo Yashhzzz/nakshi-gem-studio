@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { MessageCircle } from 'lucide-react';
 import { trackEvent } from '@/hooks/useTrackEvent';
 
+const WHATSAPP_NUMBER = '919876543210'; // Replace with your actual WhatsApp number
+
 const WhatsAppFloat = () => {
   const [hovered, setHovered] = useState(false);
 
@@ -13,7 +15,7 @@ const WhatsAppFloat = () => {
     <div className="fixed bottom-5 right-5 z-[200] flex items-center gap-3">
       {hovered && (
         <div
-          className="font-body text-[12px] px-3 py-2 whitespace-nowrap tracking-wide"
+          className="font-body text-[12px] px-3 py-2 whitespace-nowrap tracking-wide hidden md:block"
           style={{
             background: 'hsl(var(--nakshi-darkest))',
             color: 'hsl(var(--nakshi-text-on-dark))',
@@ -25,7 +27,7 @@ const WhatsAppFloat = () => {
         </div>
       )}
       <a
-        href="https://wa.me/"
+        href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi! I want to know more about Nakshi AI.')}`}
         target="_blank"
         rel="noopener noreferrer"
         onMouseEnter={() => setHovered(true)}
