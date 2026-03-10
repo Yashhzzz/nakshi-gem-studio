@@ -7,6 +7,7 @@ const navLinks = [
   { label: 'Features', href: '#features' },
   { label: 'Pricing', href: '#pricing' },
   { label: 'Refer & Earn', href: '#referral' },
+  { label: 'FAQ', href: '/faq' },
 ];
 
 const Navbar = () => {
