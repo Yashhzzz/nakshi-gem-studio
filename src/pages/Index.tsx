@@ -14,17 +14,8 @@ import FooterCTA from '@/components/FooterCTA';
 import Footer from '@/components/Footer';
 import ScrollProgress from '@/components/ScrollProgress';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
-import { trackEvent } from '@/hooks/useTrackEvent';
 
 const Index = () => {
-  useEffect(() => {
-    trackEvent('page_view');
-    // Track referral detection
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('ref')) {
-      trackEvent('referral_detected', { code: params.get('ref') });
-    }
-  }, []);
 
   return (
     <>
