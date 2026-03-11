@@ -235,22 +235,6 @@ const CountdownWaitlist = () => {
                 </p>
               </motion.div>
 
-              {referrer?.valid && (
-                <div className="mb-6 md:mb-8 flex items-start gap-3 p-4" style={{ background: 'rgba(184, 134, 11, 0.06)', border: '1px solid rgba(184, 134, 11, 0.15)', borderRadius: 8 }}>
-                  <span className="text-[18px] mt-0.5">🎉</span>
-                  <div>
-                    <p className="font-body text-[13px] text-foreground font-medium">
-                      Referred by {referrer.shopName || 'a Nakshi AI member'}{referrer.city ? ` from ${referrer.city}` : ''}
-                    </p>
-                    <p className="font-body text-[12px] text-muted-foreground mt-0.5">You'll get ₹250 off your first month</p>
-                  </div>
-                </div>
-              )}
-              {referrer && !referrer.valid && (
-                <div className="mb-6 md:mb-8 p-4 font-body text-[13px] text-muted-foreground text-center" style={{ background: 'hsl(var(--accent))', borderRadius: 8 }}>
-                  This referral code isn't valid. You can still join the waitlist!
-                </div>
-              )}
 
               {isDuplicate && (
                 <div className="mb-5 md:mb-6 flex items-center gap-2.5 p-4 font-body text-[13px]" style={{ color: 'hsl(var(--nakshi-success))', background: 'rgba(74, 124, 89, 0.06)', border: '1px solid rgba(74, 124, 89, 0.2)', borderRadius: 8 }}>
