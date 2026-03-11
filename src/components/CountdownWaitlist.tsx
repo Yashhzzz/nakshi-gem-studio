@@ -1,9 +1,5 @@
 import { useState, useEffect, useRef, FormEvent } from 'react';
 import { motion } from 'framer-motion';
-import { useWaitlistSubmit } from '@/hooks/useWaitlistSubmit';
-import { useWaitlistCount } from '@/hooks/useWaitlistCount';
-import { useReferralCode } from '@/hooks/useReferralCode';
-import { trackEvent } from '@/hooks/useTrackEvent';
 import { Loader2, Clock, Shield, ArrowRight, Copy, Check } from 'lucide-react';
 
 const getLaunchDate = (): Date => {
