@@ -60,22 +60,17 @@ const CountdownWaitlist = () => {
     if (selectedJewelry.length === 0) errs.jewelry = 'Select at least one jewelry type';
     if (Object.keys(errs).length) { setErrors(errs); return; }
     setErrors({});
+    setLoading(true);
 
-    const result = await submit({
-      whatsapp_number: data.get('phone') as string,
-      name: data.get('name') as string,
-      shop_name: data.get('shop') as string,
-      city: data.get('city') as string,
-      jewelry_types: selectedJewelry,
-      how_did_you_hear: (data.get('hearAbout') as string) || undefined,
-      referral_code_used: (data.get('referral') as string) || undefined,
-    });
-
-    if (result) {
-      setRefCode(result.referralCode);
-      setRefLink(result.referralLink);
+    // TODO: Replace with Firebase submission
+    setTimeout(() => {
+      const code = 'NAK-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+      const link = `${window.location.origin}/?ref=${code}`;
+      setRefCode(code);
+      setRefLink(link);
       setSubmitted(true);
-    }
+      setLoading(false);
+    }, 1000);
   };
 
   const toggleJewelry = (type: string) => {
