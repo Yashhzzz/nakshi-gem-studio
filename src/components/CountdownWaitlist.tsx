@@ -88,9 +88,6 @@ const CountdownWaitlist = () => {
   const copyMessage = async () => { await navigator.clipboard.writeText(shareMessage); setCopiedMsg(true); setTimeout(() => setCopiedMsg(false), 2000); };
   const shareInstagram = async () => { await navigator.clipboard.writeText(refLink); setCopiedInsta(true); setTimeout(() => setCopiedInsta(false), 3000); };
 
-  const confettiColors = ['#B8860B', '#D3A376', '#4A7C59', '#E6DAC8', '#6E473B'];
-  const displayCount = count || 0;
-
   const timeBlocks = [
     { val: timeLeft.days, label: 'Days' },
     { val: timeLeft.hrs, label: 'Hours' },
