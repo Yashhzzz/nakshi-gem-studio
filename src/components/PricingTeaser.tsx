@@ -1,7 +1,5 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { usePlanTracking } from '@/hooks/usePlanTracking';
-import { trackEvent } from '@/hooks/useTrackEvent';
 
 const plans = [
   { name: 'starter', label: 'Starter', price: 699, priceStr: '₹699', popular: false, features: ['40 images/month', '3 model options', 'Gemstone & metal swap'] },
@@ -10,10 +8,7 @@ const plans = [
 ];
 
 const PricingTeaser = () => {
-  const { trackPlanView, trackPlanCTA } = usePlanTracking();
   const sectionRef = useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: '-60px' });
-  if (isInView) trackEvent('pricing_viewed');
 
   return (
     <section ref={sectionRef} className="bg-background py-[72px] md:py-[140px] section-editorial texture-noise" id="pricing">
@@ -37,14 +32,14 @@ const PricingTeaser = () => {
         {/* Mobile: Swipe cards */}
         <div className="md:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-5 px-5 scrollbar-hide">
           {plans.map((plan, i) => (
-            <PlanCard key={plan.name} plan={plan} index={i} isMobile onView={() => trackPlanView(plan.name, plan.price)} onCTA={() => trackPlanCTA(plan.name, plan.price)} />
+            <PlanCard key={plan.name} plan={plan} index={i} isMobile />
           ))}
         </div>
 
         {/* Desktop: Grid */}
         <div className="hidden md:grid grid-cols-3 gap-6 items-stretch">
           {plans.map((plan, i) => (
-            <PlanCard key={plan.name} plan={plan} index={i} onView={() => trackPlanView(plan.name, plan.price)} onCTA={() => trackPlanCTA(plan.name, plan.price)} />
+            <PlanCard key={plan.name} plan={plan} index={i} />
           ))}
         </div>
       </div>
@@ -52,15 +47,11 @@ const PricingTeaser = () => {
   );
 };
 
-const PlanCard = ({ plan, index, isMobile, onView, onCTA }: { plan: typeof plans[0]; index: number; isMobile?: boolean; onView: () => void; onCTA: () => void }) => {
+const PlanCard = ({ plan, index, isMobile }: { plan: typeof plans[0]; index: number; isMobile?: boolean }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-60px' });
-  if (isInView) onView();
 
   const handleCTA = (e: React.MouseEvent) => {
     e.preventDefault();
-    onCTA();
-    trackEvent('cta_click', { plan: plan.name, source: 'pricing' });
     document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -102,7 +93,7 @@ const PlanCard = ({ plan, index, isMobile, onView, onCTA }: { plan: typeof plans
       <ul className="space-y-3 mb-8 flex-1">
         {plan.features.map((f, j) => (
           <li key={j} className={`flex items-start gap-2.5 font-body text-[13px] ${plan.popular ? 'text-nakshi-text-on-dark/80' : 'text-nakshi-text-body'}`}>
-            <span className={`font-bold mt-0.5 flex-shrink-0 ${plan.popular ? 'text-primary' : 'text-primary'}`}>✓</span>
+            <span className={`font-bold mt-0.5 flex-shrink-0 text-primary`}>✓</span>
             <span>{f}</span>
           </li>
         ))}

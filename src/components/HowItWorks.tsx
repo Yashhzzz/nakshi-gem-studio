@@ -169,14 +169,13 @@ function DesktopTimeline({ scrollProgress, progressValue }: { scrollProgress: Mo
     <div className="hidden md:block">
       {/* Timeline bar with icons */}
       <div className="relative mb-20">
-        {/* Background line */}
-        <div className="absolute top-1/2 -translate-y-1/2 left-[calc(16.67%-4px)] right-[calc(16.67%-4px)] h-[2px] bg-white/[0.06] rounded-full">
+        {/* Background line — aligned to icon centers */}
+        <div className="absolute top-1/2 -translate-y-1/2 h-[2px] bg-white/[0.06] rounded-full" style={{ left: 'calc(16.67%)', right: 'calc(16.67%)' }}>
           <motion.div
-            className="h-full rounded-full"
+            className="h-full rounded-full origin-left"
             style={{
               background: 'linear-gradient(90deg, hsl(var(--nakshi-whatsapp)), hsl(var(--primary)), hsl(var(--nakshi-gold-light)))',
               scaleX: progressValue,
-              transformOrigin: 'left',
             }}
           />
         </div>

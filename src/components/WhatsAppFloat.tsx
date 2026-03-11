@@ -6,9 +6,7 @@ const WHATSAPP_NUMBER = '919876543210'; // Replace with your actual WhatsApp num
 const WhatsAppFloat = () => {
   const [hovered, setHovered] = useState(false);
 
-  const handleClick = () => {
-    trackEvent('whatsapp_float_click');
-  };
+  const handleClick = () => {};
 
   return (
     <div className="fixed bottom-5 right-5 z-[200] flex items-center gap-3">
