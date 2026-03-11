@@ -27,9 +27,10 @@ const CountdownWaitlist = () => {
   const launchDate = useRef(getLaunchDate()).current;
   const formRef = useRef<HTMLFormElement>(null);
 
-  const { submit, loading, error: submitError, isDuplicate } = useWaitlistSubmit();
-  const { count } = useWaitlistCount();
-  const { referrer } = useReferralCode();
+  const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isDuplicate, setIsDuplicate] = useState(false);
+  const displayCount = 0;
 
   useEffect(() => {
     const tick = () => {
