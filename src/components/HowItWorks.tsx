@@ -51,7 +51,7 @@ const HowItWorks = () => {
     offset: ['start end', 'end start'],
   });
 
-  const progressValue = useTransform(scrollYProgress, [0.15, 0.35, 0.5, 0.65], [0, 0.5, 1, 1]);
+  const progressValue = useTransform(scrollYProgress, [0.12, 0.25, 0.35, 0.45, 0.55, 0.65], [0, 0.15, 0.4, 0.65, 0.9, 1]);
 
   return (
     <section
