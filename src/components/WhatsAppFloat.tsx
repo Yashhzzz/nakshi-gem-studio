@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { MessageCircle } from 'lucide-react';
-import { trackEvent } from '@/hooks/useTrackEvent';
 
 const WHATSAPP_NUMBER = '919876543210'; // Replace with your actual WhatsApp number
 
