@@ -359,7 +359,7 @@ const CountdownWaitlist = () => {
                       name="referral" placeholder="NAK-XXXXXX"
                       className={inputCls}
                       style={{ borderColor: 'hsl(var(--border))', borderRadius: 8, background: 'hsl(var(--secondary))' }}
-                      defaultValue={referrer?.code || ''} disabled={loading}
+                      defaultValue="" disabled={loading}
                     />
                   </div>
 
