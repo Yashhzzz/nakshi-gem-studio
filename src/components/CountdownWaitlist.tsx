@@ -1,9 +1,5 @@
 import { useState, useEffect, useRef, FormEvent } from 'react';
 import { motion } from 'framer-motion';
-import { useWaitlistSubmit } from '@/hooks/useWaitlistSubmit';
-import { useWaitlistCount } from '@/hooks/useWaitlistCount';
-import { useReferralCode } from '@/hooks/useReferralCode';
-import { trackEvent } from '@/hooks/useTrackEvent';
 import { Loader2, Clock, Shield, ArrowRight, Copy, Check } from 'lucide-react';
 
 const getLaunchDate = (): Date => {
@@ -31,9 +27,10 @@ const CountdownWaitlist = () => {
   const launchDate = useRef(getLaunchDate()).current;
   const formRef = useRef<HTMLFormElement>(null);
 
-  const { submit, loading, error: submitError, isDuplicate } = useWaitlistSubmit();
-  const { count } = useWaitlistCount();
-  const { referrer } = useReferralCode();
+  const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isDuplicate, setIsDuplicate] = useState(false);
+  const displayCount = 0;
 
   useEffect(() => {
     const tick = () => {
@@ -63,22 +60,17 @@ const CountdownWaitlist = () => {
     if (selectedJewelry.length === 0) errs.jewelry = 'Select at least one jewelry type';
     if (Object.keys(errs).length) { setErrors(errs); return; }
     setErrors({});
+    setLoading(true);
 
-    const result = await submit({
-      whatsapp_number: data.get('phone') as string,
-      name: data.get('name') as string,
-      shop_name: data.get('shop') as string,
-      city: data.get('city') as string,
-      jewelry_types: selectedJewelry,
-      how_did_you_hear: (data.get('hearAbout') as string) || undefined,
-      referral_code_used: (data.get('referral') as string) || undefined,
-    });
-
-    if (result) {
-      setRefCode(result.referralCode);
-      setRefLink(result.referralLink);
+    // TODO: Replace with Firebase submission
+    setTimeout(() => {
+      const code = 'NAK-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+      const link = `${window.location.origin}/?ref=${code}`;
+      setRefCode(code);
+      setRefLink(link);
       setSubmitted(true);
-    }
+      setLoading(false);
+    }, 1000);
   };
 
   const toggleJewelry = (type: string) => {
@@ -97,7 +89,6 @@ const CountdownWaitlist = () => {
   const shareInstagram = async () => { await navigator.clipboard.writeText(refLink); setCopiedInsta(true); setTimeout(() => setCopiedInsta(false), 3000); };
 
   const confettiColors = ['#B8860B', '#D3A376', '#4A7C59', '#E6DAC8', '#6E473B'];
-  const displayCount = count || 0;
 
   const timeBlocks = [
     { val: timeLeft.days, label: 'Days' },
@@ -246,22 +237,6 @@ const CountdownWaitlist = () => {
                 </p>
               </motion.div>
 
-              {referrer?.valid && (
-                <div className="mb-6 md:mb-8 flex items-start gap-3 p-4" style={{ background: 'rgba(184, 134, 11, 0.06)', border: '1px solid rgba(184, 134, 11, 0.15)', borderRadius: 8 }}>
-                  <span className="text-[18px] mt-0.5">🎉</span>
-                  <div>
-                    <p className="font-body text-[13px] text-foreground font-medium">
-                      Referred by {referrer.shopName || 'a Nakshi AI member'}{referrer.city ? ` from ${referrer.city}` : ''}
-                    </p>
-                    <p className="font-body text-[12px] text-muted-foreground mt-0.5">You'll get ₹250 off your first month</p>
-                  </div>
-                </div>
-              )}
-              {referrer && !referrer.valid && (
-                <div className="mb-6 md:mb-8 p-4 font-body text-[13px] text-muted-foreground text-center" style={{ background: 'hsl(var(--accent))', borderRadius: 8 }}>
-                  This referral code isn't valid. You can still join the waitlist!
-                </div>
-              )}
 
               {isDuplicate && (
                 <div className="mb-5 md:mb-6 flex items-center gap-2.5 p-4 font-body text-[13px]" style={{ color: 'hsl(var(--nakshi-success))', background: 'rgba(74, 124, 89, 0.06)', border: '1px solid rgba(74, 124, 89, 0.2)', borderRadius: 8 }}>
@@ -386,7 +361,7 @@ const CountdownWaitlist = () => {
                       name="referral" placeholder="NAK-XXXXXX"
                       className={inputCls}
                       style={{ borderColor: 'hsl(var(--border))', borderRadius: 8, background: 'hsl(var(--secondary))' }}
-                      defaultValue={referrer?.code || ''} disabled={loading}
+                      defaultValue="" disabled={loading}
                     />
                   </div>
 
