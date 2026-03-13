@@ -49,7 +49,7 @@ const Navbar = () => {
           backdropFilter: 'blur(16px)',
         }}
       >
-        <a href="#" className="flex flex-col leading-tight group">
+        <a href="/" className="flex flex-col leading-tight group">
           <span className="font-heading font-semibold text-[20px] md:text-[22px] tracking-[0.12em] text-foreground group-hover:text-primary transition-colors duration-300">
             NAKSHI AI
           </span>
