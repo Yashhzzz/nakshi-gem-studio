@@ -10,6 +10,7 @@ import ComparisonTable from '@/components/ComparisonTable';
 import PricingTeaser from '@/components/PricingTeaser';
 import ReferralTeaser from '@/components/ReferralTeaser';
 import CountdownWaitlist from '@/components/CountdownWaitlist';
+import FAQSection from '@/components/FAQSection';
 import FooterCTA from '@/components/FooterCTA';
 import Footer from '@/components/Footer';
 import ScrollProgress from '@/components/ScrollProgress';

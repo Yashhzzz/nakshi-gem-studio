@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const navLinks = [
-  { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Features', href: '#features' },
-  { label: 'Pricing', href: '#pricing' },
-  { label: 'Refer & Earn', href: '#referral' },
+  { label: 'How It Works', href: '/#how-it-works' },
+  { label: 'Features', href: '/#features' },
+  { label: 'Pricing', href: '/#pricing' },
+  { label: 'Refer & Earn', href: '/#referral' },
   { label: 'FAQ', href: '/faq' },
 ];
 
