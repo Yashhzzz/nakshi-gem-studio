@@ -1,18 +1,36 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const navLinks = [
-  { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Features', href: '#features' },
-  { label: 'Pricing', href: '#pricing' },
-  { label: 'Refer & Earn', href: '#referral' },
+  { label: 'How It Works', href: '/#how-it-works' },
+  { label: 'Features', href: '/#features' },
+  { label: 'Pricing', href: '/#pricing' },
+  { label: 'Refer & Earn', href: '/#referral' },
   { label: 'FAQ', href: '/faq' },
 ];
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('/#')) {
+      e.preventDefault();
+      const hash = href.substring(1); // e.g. #how-it-works
+      if (location.pathname === '/') {
+        // Already on home page, just scroll
+        const el = document.querySelector(hash);
+        el?.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        // Navigate to home, then scroll
+        navigate('/' + hash);
+      }
+    }
+  };
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 60);
@@ -31,7 +49,7 @@ const Navbar = () => {
           backdropFilter: 'blur(16px)',
         }}
       >
-        <a href="#" className="flex flex-col leading-tight group">
+        <a href="/" className="flex flex-col leading-tight group">
           <span className="font-heading font-semibold text-[20px] md:text-[22px] tracking-[0.12em] text-foreground group-hover:text-primary transition-colors duration-300">
             NAKSHI AI
           </span>
@@ -43,6 +61,7 @@ const Navbar = () => {
             <a
               key={link.href}
               href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
               className="font-body text-[13px] tracking-wide text-muted-foreground hover:text-foreground relative group transition-colors duration-300"
             >
               {link.label}
@@ -53,7 +72,8 @@ const Navbar = () => {
 
         <div className="flex items-center gap-3">
           <a
-            href="#waitlist"
+            href="/#waitlist"
+            onClick={(e) => handleNavClick(e, '/#waitlist')}
             className="hidden sm:inline-flex font-body text-[12px] md:text-[13px] font-semibold tracking-wider uppercase bg-foreground text-background px-5 md:px-6 py-2.5 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
             style={{ borderRadius: 1 }}
           >
@@ -94,7 +114,7 @@ const Navbar = () => {
               <motion.a
                 key={link.href}
                 href={link.href}
-                onClick={() => setMenuOpen(false)}
+                onClick={(e) => { handleNavClick(e as any, link.href); setMenuOpen(false); }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.08, duration: 0.4 }}
@@ -107,8 +127,8 @@ const Navbar = () => {
             <div className="w-12 h-[1px] bg-nakshi-gold-light/30 mt-2" />
 
             <motion.a
-              href="#waitlist"
-              onClick={() => setMenuOpen(false)}
+              href="/#waitlist"
+              onClick={(e) => { handleNavClick(e as any, '/#waitlist'); setMenuOpen(false); }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.4 }}

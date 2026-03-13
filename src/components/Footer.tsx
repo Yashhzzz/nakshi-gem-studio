@@ -1,13 +1,13 @@
 const footerLinks = {
   Product: [
-    { label: 'How It Works', href: '#how-it-works' },
-    { label: 'Features', href: '#features' },
-    { label: 'Pricing', href: '#pricing' },
-    { label: 'Refer & Earn', href: '#referral' },
+    { label: 'How It Works', href: '/#how-it-works' },
+    { label: 'Features', href: '/#features' },
+    { label: 'Pricing', href: '/#pricing' },
+    { label: 'Refer & Earn', href: '/#referral' },
   ],
   Support: [
     { label: 'WhatsApp Support', href: 'https://wa.me/919876543210', external: true },
-    { label: 'FAQ', href: '#waitlist' },
+    { label: 'FAQ', href: '/faq' },
   ],
   Legal: [
     { label: 'Terms of Service', href: '/terms' },
