@@ -72,7 +72,8 @@ const Navbar = () => {
 
         <div className="flex items-center gap-3">
           <a
-            href="#waitlist"
+            href="/#waitlist"
+            onClick={(e) => handleNavClick(e, '/#waitlist')}
             className="hidden sm:inline-flex font-body text-[12px] md:text-[13px] font-semibold tracking-wider uppercase bg-foreground text-background px-5 md:px-6 py-2.5 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
             style={{ borderRadius: 1 }}
           >
