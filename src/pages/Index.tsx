@@ -32,6 +32,7 @@ const Index = () => {
         <ComparisonTable />
         <PricingTeaser />
         <ReferralTeaser />
+        <FAQSection />
         <CountdownWaitlist />
         <FooterCTA />
       </main>

@@ -14,6 +14,23 @@ const navLinks = [
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('/#')) {
+      e.preventDefault();
+      const hash = href.substring(1); // e.g. #how-it-works
+      if (location.pathname === '/') {
+        // Already on home page, just scroll
+        const el = document.querySelector(hash);
+        el?.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        // Navigate to home, then scroll
+        navigate('/' + hash);
+      }
+    }
+  };
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 60);
