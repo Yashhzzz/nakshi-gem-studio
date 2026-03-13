@@ -30,7 +30,7 @@ const PricingTeaser = () => {
         </motion.div>
 
         {/* Mobile: Swipe cards */}
-        <div className="md:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-5 px-5 scrollbar-hide">
+        <div className="md:hidden flex flex-col gap-4">
           {plans.map((plan, i) => (
             <PlanCard key={plan.name} plan={plan} index={i} isMobile />
           ))}
