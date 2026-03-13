@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import featureRingHand from '@/assets/feature-ring-hand.jpg';
 import featureGemstoneGrid from '@/assets/feature-gemstone-grid.jpg';
 import featureBatchGrid from '@/assets/feature-batch-grid.jpg';
+import featureNecklaceModel from '@/assets/feature-necklace-model.jpg';
+import featureEarringsModel from '@/assets/feature-earrings-model.jpg';
 
 const features = [
   {
@@ -24,6 +26,20 @@ const features = [
     body: "Send 10 images at once. Get all 10 back on models in under a minute.",
     image: featureBatchGrid,
     alt: 'Grid of 6 jewelry model shots',
+  },
+  {
+    num: '04',
+    title: 'Necklace Sets',
+    body: 'Showcase heavy necklace sets on real models — perfect for bridal and festive collections.',
+    image: featureNecklaceModel,
+    alt: 'Gold necklace with emerald pendant on model',
+  },
+  {
+    num: '05',
+    title: 'Earrings & Jhumkas',
+    body: 'From chandbalis to jhumkas — see every earring styled on a model, ready for your catalog.',
+    image: featureEarringsModel,
+    alt: 'Gold jhumka earrings on Indian model',
   },
 ];
 
