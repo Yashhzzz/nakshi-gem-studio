@@ -30,7 +30,7 @@ const PricingTeaser = () => {
         </motion.div>
 
         {/* Mobile: Swipe cards */}
-        <div className="md:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-5 px-5 scrollbar-hide">
+        <div className="md:hidden flex flex-col gap-4">
           {plans.map((plan, i) => (
             <PlanCard key={plan.name} plan={plan} index={i} isMobile />
           ))}
@@ -62,7 +62,7 @@ const PlanCard = ({ plan, index, isMobile }: { plan: typeof plans[0]; index: num
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, delay: index * 0.1 }}
       viewport={{ once: true, margin: '-60px' }}
-      className={`relative flex flex-col ${isMobile ? 'snap-center flex-shrink-0 w-[280px]' : ''}`}
+      className={`relative flex flex-col`}
       style={{
         borderRadius: 6,
         background: plan.popular ? 'hsl(var(--foreground))' : 'hsl(var(--card))',
